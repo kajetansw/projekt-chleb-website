@@ -3,7 +3,9 @@ import Link from 'next/link';
 
 const NavbarLink = ({ children, href }) => (
   <Link href={href}>
-    <StyledLink mr="2rem">{children}</StyledLink>
+    <StyledLink display={{ base: 'block', lg: 'initial' }} mr={[0, 0, 0, 8]} mb={[1, 1, 1, 0]}>
+      {children}
+    </StyledLink>
   </Link>
 );
 
