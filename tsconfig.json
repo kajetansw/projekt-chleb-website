@@ -16,7 +16,8 @@
     "strictNullChecks": true,
     "baseUrl": "./",
     "paths": {
-      "@/components/*": ["components/*"]
+      "@/components/*": ["components/*"],
+      "@/models": ["models.d.ts"]
     }
   },
   "exclude": ["node_modules", ".next", "out"],

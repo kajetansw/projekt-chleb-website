@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
-import { Heading, Text } from '@chakra-ui/react';
+import Gallery from '@/components/Gallery';
 import Head from 'next/head';
+import { dummyRecipes } from 'DUMMY_DATA';
 
 export const Home = (): JSX.Element => (
   <>
@@ -17,16 +18,7 @@ export const Home = (): JSX.Element => (
     <Navbar></Navbar>
 
     <main>
-      <Heading as="h1" size="2xl">
-        Hello there!
-      </Heading>
-      <Heading as="h3" size="md">
-        Hello there!
-      </Heading>
-
-      <Text>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui ea, eaque ipsum ex in cum.
-      </Text>
+      <Gallery recipes={dummyRecipes}></Gallery>
     </main>
   </>
 );
