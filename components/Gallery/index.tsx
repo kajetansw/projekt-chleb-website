@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { SpaceProps } from '@chakra-ui/styled-system';
 
 import { Recipe } from '@/models';
 import LikeIcon from '@/components/LikeIcon';
+import TitleHeading from '@/components/TitleHeading';
 
 interface GalleryProps {
   recipes: Recipe[];
@@ -55,7 +56,17 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
         mr={5}
       ></PreparationTimeBadge>
       <LikesBadge likes={recipes[viewedRecipeIdx].likes}></LikesBadge>
-      <Heading>{recipes[viewedRecipeIdx].title}</Heading>
+      <TitleHeading my={6} fontSize={36}>
+        {recipes[viewedRecipeIdx].title}
+      </TitleHeading>
+
+      <UnorderedList fontSize={18} mb={6}>
+        {recipes[viewedRecipeIdx].ingredients.map((ingredient) => (
+          <ListItem key={ingredient}>{ingredient}</ListItem>
+        ))}
+      </UnorderedList>
+
+      <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
     </>
   );
 };

@@ -1,18 +1,9 @@
-import { Recipe, Ingredient } from '@/models';
+import { Recipe } from '@/models';
 
-export const dummyIngredients: Ingredient[] = [
-  {
-    name: 'Test_ingredient1',
-    amount: '1g',
-  },
-  {
-    name: 'Test_ingredient_2',
-    amount: '1g',
-  },
-  {
-    name: 'Test_ingredient_3',
-    amount: '1g',
-  },
+export const dummyIngredients: string[] = [
+  'Test_ingredient_1',
+  'Test_ingredient_2',
+  'Test_ingredient_3',
 ];
 
 export const dummyRecipes: Recipe[] = [
@@ -23,7 +14,7 @@ export const dummyRecipes: Recipe[] = [
     instruction: 'Test_instruction1',
     likes: 100,
     timeOfPreparationInMins: 30,
-    title: 'Test_title1',
+    title: 'Chleb żytni',
   },
   {
     uid: '2',
