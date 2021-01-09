@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Flex, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
+import { Flex, Heading, Text, UnorderedList, ListItem, Box } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { SpaceProps } from '@chakra-ui/styled-system';
+import Image from 'next/image';
 
 import { Recipe } from '@/models';
 import LikeIcon from '@/components/LikeIcon';
@@ -51,22 +52,30 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
 
   return (
     <>
-      <PreparationTimeBadge
-        timeOfPreparationInMins={recipes[viewedRecipeIdx].timeOfPreparationInMins}
-        mr={5}
-      ></PreparationTimeBadge>
-      <LikesBadge likes={recipes[viewedRecipeIdx].likes}></LikesBadge>
-      <TitleHeading my={6} fontSize={36}>
-        {recipes[viewedRecipeIdx].title}
-      </TitleHeading>
+      <Flex w="full" justify="space-between" border="1px solid #cdcdcd">
+        <Box width="50%" my={8} mx={10}>
+          <PreparationTimeBadge
+            timeOfPreparationInMins={recipes[viewedRecipeIdx].timeOfPreparationInMins}
+            mr={5}
+          ></PreparationTimeBadge>
+          <LikesBadge likes={recipes[viewedRecipeIdx].likes}></LikesBadge>
+          <TitleHeading my={6} fontSize={36}>
+            {recipes[viewedRecipeIdx].title}
+          </TitleHeading>
 
-      <UnorderedList fontSize={18} mb={6}>
-        {recipes[viewedRecipeIdx].ingredients.map((ingredient) => (
-          <ListItem key={ingredient}>{ingredient}</ListItem>
-        ))}
-      </UnorderedList>
+          <UnorderedList fontSize={18} mb={6}>
+            {recipes[viewedRecipeIdx].ingredients.map((ingredient) => (
+              <ListItem key={ingredient}>{ingredient}</ListItem>
+            ))}
+          </UnorderedList>
 
-      <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
+          <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
+        </Box>
+
+        <Flex>
+          <Image src="/bread1.jpg" width={450} height={360} objectFit="cover"></Image>
+        </Flex>
+      </Flex>
     </>
   );
 };
