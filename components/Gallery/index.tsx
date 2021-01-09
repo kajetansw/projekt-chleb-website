@@ -1,8 +1,17 @@
 import { useState } from 'react';
-import { Flex, Heading, Text, UnorderedList, ListItem, Box, Button } from '@chakra-ui/react';
+import {
+  Flex,
+  Heading,
+  Text,
+  UnorderedList,
+  ListItem,
+  Box,
+  Button,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { SpaceProps } from '@chakra-ui/styled-system';
-import Image from 'next/image';
+import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Recipe } from '@/models';
@@ -36,6 +45,17 @@ const PreparationTimeBadge = ({
   </Flex>
 );
 
+const GalleryImage = (props: Omit<NextImageProps, 'width' | 'height'>) => {
+  const width = useBreakpointValue({ base: 625, lg: 1000 }) || 0;
+  const height = useBreakpointValue({ base: 500, lg: 800 }) || 0;
+
+  return (
+    <Box maxH={height} maxW={width}>
+      <NextImage {...props} width={width} height={height} />
+    </Box>
+  );
+};
+
 const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
   if (!recipes?.length) {
     return <Heading>No recipes found!</Heading>;
@@ -53,8 +73,13 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
 
   return (
     <>
-      <Flex w="full" justify="space-between" border="1px solid #cdcdcd">
-        <Box width="50%" my={8} mx={10}>
+      <Flex
+        direction={['column-reverse', 'column-reverse', 'row']}
+        w="full"
+        justify="space-between"
+        border="1px solid #cdcdcd"
+      >
+        <Box w={['initial', 'initial', '50%', '50%']} my={8} mx={10}>
           <PreparationTimeBadge
             timeOfPreparationInMins={recipes[viewedRecipeIdx].timeOfPreparationInMins}
             mr={5}
@@ -73,13 +98,8 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
           <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
         </Box>
 
-        <Flex position="relative">
-          <Image
-            src={recipes[viewedRecipeIdx].imageSrc}
-            width={450}
-            height={360}
-            objectFit="cover"
-          ></Image>
+        <Flex position="relative" alignSelf="center">
+          <GalleryImage src={recipes[viewedRecipeIdx].imageSrc} objectFit="cover"></GalleryImage>
           <Button
             variant="ghost"
             p={0}
