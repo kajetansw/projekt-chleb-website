@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Flex, Heading, Text, UnorderedList, ListItem, Box } from '@chakra-ui/react';
+import { Flex, Heading, Text, UnorderedList, ListItem, Box, Button } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { SpaceProps } from '@chakra-ui/styled-system';
 import Image from 'next/image';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Recipe } from '@/models';
 import LikeIcon from '@/components/LikeIcon';
@@ -72,8 +73,39 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
           <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
         </Box>
 
-        <Flex>
-          <Image src="/bread1.jpg" width={450} height={360} objectFit="cover"></Image>
+        <Flex position="relative">
+          <Image
+            src={recipes[viewedRecipeIdx].imageSrc}
+            width={450}
+            height={360}
+            objectFit="cover"
+          ></Image>
+          <Button
+            variant="ghost"
+            p={0}
+            top="50%"
+            left="0"
+            color="#fff"
+            position="absolute"
+            transform="translate(0, -50%)"
+            _hover={{ bg: '#ebedf059' }}
+            onClick={previousRecipe}
+          >
+            <ChevronLeftIcon h={16} w={16}></ChevronLeftIcon>
+          </Button>
+          <Button
+            variant="ghost"
+            p={0}
+            top="50%"
+            right="0"
+            color="#fff"
+            position="absolute"
+            transform="translate(0, -50%)"
+            _hover={{ bg: '#ebedf059' }}
+            onClick={nextRecipe}
+          >
+            <ChevronRightIcon h={16} w={16}></ChevronRightIcon>
+          </Button>
         </Flex>
       </Flex>
     </>
