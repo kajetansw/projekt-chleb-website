@@ -49,11 +49,12 @@ const GalleryImage = (props: Omit<NextImageProps, 'width' | 'height'>) => {
   const width = useBreakpointValue({ base: 625, lg: 1000 }) || 0;
   const height = useBreakpointValue({ base: 500, lg: 800 }) || 0;
 
-  return (
-    <Box maxH={height} maxW={width}>
-      <NextImage {...props} width={width} height={height} />
-    </Box>
-  );
+  return <NextImage {...props} width={width} height={height} />;
+};
+
+const useCroppedRecipeInstruction = (recipeInstruction: string) => {
+  const charLimit = useBreakpointValue({ base: 400, lg: 600, xl: 1000 }) || 400;
+  return recipeInstruction.slice(0, charLimit) + '...';
 };
 
 const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
@@ -70,6 +71,9 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
     viewedRecipeIdx <= 0
       ? setViewedRecipeIdx(recipes.length - 1)
       : setViewedRecipeIdx((curr) => curr - 1);
+  const croppedRecipeInstruction = useCroppedRecipeInstruction(
+    recipes[viewedRecipeIdx].instruction
+  );
 
   return (
     <>
@@ -79,7 +83,7 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
         justify="space-between"
         border="1px solid #cdcdcd"
       >
-        <Box w={['initial', 'initial', '50%', '50%']} my={8} mx={10}>
+        <Box w={['initial', 'initial', '50%', '50%']} my={[4, 6, 8]} mx={[5, 8, 10]}>
           <PreparationTimeBadge
             timeOfPreparationInMins={recipes[viewedRecipeIdx].timeOfPreparationInMins}
             mr={5}
@@ -95,7 +99,9 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             ))}
           </UnorderedList>
 
-          <Text color="#828282">{recipes[viewedRecipeIdx].instruction}</Text>
+          <Text color="#828282" whiteSpace="pre-wrap" textAlign="justify">
+            {croppedRecipeInstruction}
+          </Text>
         </Box>
 
         <Flex position="relative" alignSelf="center">
