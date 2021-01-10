@@ -1,4 +1,4 @@
-# Projekt Chleb
+![dwadwa](./public/logo.png)
 
 Website for the "Projekt Chleb" initiative, developed with a tech stack:
 
