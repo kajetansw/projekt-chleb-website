@@ -10,40 +10,17 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
-import { SpaceProps } from '@chakra-ui/styled-system';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Recipe } from '@/models';
 import LikeIcon from '@/components/LikeIcon';
 import TitleHeading from '@/components/TitleHeading';
 import ResponsiveImage from '@/components/ResponsiveImage';
+import IconBadge from '@/components/IconBadge';
 
 interface GalleryProps {
   recipes: Recipe[];
 }
-
-const AdditionalInfoText = ({ children }) => (
-  <Text fontSize={14} display="inline-block" pl={2} color="#707070">
-    {children}
-  </Text>
-);
-
-const LikesBadge = ({ likes, ...spaceProps }: SpaceProps & { likes: number }) => (
-  <Flex {...spaceProps} display="inline-block">
-    <LikeIcon color="#f2c94c" height={6} width={6}></LikeIcon>
-    <AdditionalInfoText>{likes}</AdditionalInfoText>
-  </Flex>
-);
-
-const PreparationTimeBadge = ({
-  timeOfPreparationInMins,
-  ...spaceProps
-}: SpaceProps & { timeOfPreparationInMins: number }) => (
-  <Flex {...spaceProps} display="inline-block">
-    <TimeIcon height={5} width={5} color="#27ae60"></TimeIcon>
-    <AdditionalInfoText>{timeOfPreparationInMins}</AdditionalInfoText>
-  </Flex>
-);
 
 const useCroppedRecipeInstruction = (recipeInstruction: string) => {
   const charLimit = useBreakpointValue({ base: 400, lg: 600, xl: 1000 }) || 400;
@@ -77,11 +54,26 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
         border="1px solid #cdcdcd"
       >
         <Box w={['initial', 'initial', '50%', '50%']} my={[4, 6, 8]} mx={[5, 8, 10]}>
-          <PreparationTimeBadge
-            timeOfPreparationInMins={recipes[viewedRecipeIdx].timeOfPreparationInMins}
+          <IconBadge
+            IconComponent={TimeIcon}
+            iconColor="#27ae60"
+            color="#707070"
+            iconSize={5}
+            fontSize={14}
             mr={5}
-          ></PreparationTimeBadge>
-          <LikesBadge likes={recipes[viewedRecipeIdx].likes}></LikesBadge>
+          >
+            {recipes[viewedRecipeIdx].timeOfPreparationInMins}
+          </IconBadge>
+          <IconBadge
+            IconComponent={LikeIcon}
+            iconColor="#f2c94c"
+            color="#707070"
+            iconSize={6}
+            fontSize={14}
+          >
+            {recipes[viewedRecipeIdx].likes}
+          </IconBadge>
+
           <TitleHeading my={6} fontSize={36}>
             {recipes[viewedRecipeIdx].title}
           </TitleHeading>
