@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Gallery from '@/components/Gallery';
 import { dummyRecipes } from 'DUMMY_DATA';
 import RecipesGrid from '@/components/RecipesGrid';
+import Footer from '@/components/Footer';
 
 export const Home = (): JSX.Element => (
   <>
@@ -34,6 +35,8 @@ export const Home = (): JSX.Element => (
         Ostatnio dodane
       </Heading>
       <RecipesGrid recipes={dummyRecipes} maxItems={6}></RecipesGrid>
+
+      <Footer mt={20} mb={8}></Footer>
     </main>
   </>
 );
