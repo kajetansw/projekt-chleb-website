@@ -11,12 +11,12 @@ import {
 } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 import { SpaceProps } from '@chakra-ui/styled-system';
-import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Recipe } from '@/models';
 import LikeIcon from '@/components/LikeIcon';
 import TitleHeading from '@/components/TitleHeading';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 interface GalleryProps {
   recipes: Recipe[];
@@ -44,13 +44,6 @@ const PreparationTimeBadge = ({
     <AdditionalInfoText>{timeOfPreparationInMins}</AdditionalInfoText>
   </Flex>
 );
-
-const GalleryImage = (props: Omit<NextImageProps, 'width' | 'height'>) => {
-  const width = useBreakpointValue({ base: 625, lg: 1000 }) || 0;
-  const height = useBreakpointValue({ base: 500, lg: 800 }) || 0;
-
-  return <NextImage {...props} width={width} height={height} />;
-};
 
 const useCroppedRecipeInstruction = (recipeInstruction: string) => {
   const charLimit = useBreakpointValue({ base: 400, lg: 600, xl: 1000 }) || 400;
@@ -105,7 +98,12 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
         </Box>
 
         <Flex position="relative" alignSelf="center">
-          <GalleryImage src={recipes[viewedRecipeIdx].imageSrc} objectFit="cover"></GalleryImage>
+          <ResponsiveImage
+            width={{ base: 625, lg: 1000 }}
+            height={{ base: 500, lg: 800 }}
+            src={recipes[viewedRecipeIdx].imageSrc}
+            objectFit="cover"
+          ></ResponsiveImage>
           <Button
             variant="ghost"
             p={0}

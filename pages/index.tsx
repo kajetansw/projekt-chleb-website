@@ -1,7 +1,10 @@
+import Head from 'next/head';
+import { Heading } from '@chakra-ui/react';
+
 import Navbar from '@/components/Navbar';
 import Gallery from '@/components/Gallery';
-import Head from 'next/head';
 import { dummyRecipes } from 'DUMMY_DATA';
+import RecipesGrid from '@/components/RecipesGrid';
 
 export const Home = (): JSX.Element => (
   <>
@@ -22,7 +25,15 @@ export const Home = (): JSX.Element => (
     <Navbar></Navbar>
 
     <main>
+      <Heading fontSize={30} fontWeight="200" mb={3}>
+        Najwyżej oceniane
+      </Heading>
       <Gallery recipes={dummyRecipes}></Gallery>
+
+      <Heading fontSize={30} fontWeight="200" mt={16} mb={3}>
+        Ostatnio dodane
+      </Heading>
+      <RecipesGrid recipes={dummyRecipes}></RecipesGrid>
     </main>
   </>
 );
