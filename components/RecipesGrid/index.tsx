@@ -1,5 +1,8 @@
 import { Recipe } from '@/models';
-import { Flex } from '@chakra-ui/react';
+import { Flex, Grid } from '@chakra-ui/react';
+
+import ResponsiveImage from '@/components/ResponsiveImage';
+import TitleHeading from '@/components/TitleHeading';
 
 interface RecipesGridProps {
   recipes: Recipe[];
@@ -18,9 +21,19 @@ const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
 
   return (
     <>
-      {viewedRecipes.map((r) => (
-        <Flex key={r.uid}>{r.title}</Flex>
-      ))}
+      <Grid templateColumns="repeat(auto-fill, minmax(220px, 1fr))" gridGap={10}>
+        {viewedRecipes.map((r) => (
+          <Flex key={r.uid} flexDir="column">
+            <ResponsiveImage
+              src={r.imageSrc}
+              width={{ base: 220 }}
+              height={{ base: 320 }}
+              objectFit="cover"
+            ></ResponsiveImage>
+            <TitleHeading fontSize={22}>{r.title}</TitleHeading>
+          </Flex>
+        ))}
+      </Grid>
     </>
   );
 };

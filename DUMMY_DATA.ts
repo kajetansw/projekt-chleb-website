@@ -6,6 +6,8 @@ export const dummyIngredients: string[] = [
   'Test_ingredient_3',
 ];
 
+export const dummyTags: string[] = ['Test_tag1', 'Test_tag2', 'Test_tag3'];
+
 export const dummyRecipes: Recipe[] = [
   {
     uid: '1',
@@ -16,6 +18,7 @@ export const dummyRecipes: Recipe[] = [
     likes: 10,
     timeOfPreparationInMins: 10,
     title: 'Chleb pszenny',
+    tags: dummyTags,
   },
   {
     uid: '2',
@@ -26,6 +29,7 @@ export const dummyRecipes: Recipe[] = [
     likes: 20,
     timeOfPreparationInMins: 20,
     title: 'Ciasteczka',
+    tags: dummyTags,
   },
   {
     uid: '3',
@@ -36,6 +40,7 @@ export const dummyRecipes: Recipe[] = [
     likes: 30,
     timeOfPreparationInMins: 30,
     title: 'Chleb żytni',
+    tags: dummyTags,
   },
   {
     uid: '4',
@@ -46,6 +51,7 @@ export const dummyRecipes: Recipe[] = [
     likes: 40,
     timeOfPreparationInMins: 40,
     title: 'Chleb pszenny XXL',
+    tags: dummyTags,
   },
   {
     uid: '5',
@@ -56,6 +62,7 @@ export const dummyRecipes: Recipe[] = [
     likes: 50,
     timeOfPreparationInMins: 50,
     title: 'Ciasteczka XXL',
+    tags: dummyTags,
   },
   {
     uid: '6',
@@ -66,5 +73,6 @@ export const dummyRecipes: Recipe[] = [
     likes: 60,
     timeOfPreparationInMins: 60,
     title: 'Chleb żytni XXL',
+    tags: dummyTags,
   },
 ];

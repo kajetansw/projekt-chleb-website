@@ -6,4 +6,5 @@ export interface Recipe {
   timeOfPreparationInMins: number;
   likes: number;
   imageSrc: string;
+  tags: string[];
 }
