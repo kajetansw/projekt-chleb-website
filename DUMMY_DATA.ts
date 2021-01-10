@@ -28,7 +28,7 @@ export const dummyRecipes: Recipe[] = [
       'In hac habitasse platea dictumst. Nullam accumsan ante a lorem dapibus rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec dapibus felis tempus orci cursus volutpat. Ut et ipsum dignissim, volutpat ipsum eget, interdum metus. Nulla tempor dui egestas tristique interdum. Integer rhoncus nunc vitae libero sodales elementum. Aliquam mattis blandit massa, vitae consectetur metus dictum a. Cras ornare ligula sed neque pharetra, sed dignissim erat ultricies. Quisque pellentesque urna ac pellentesque tristique. Mauris convallis iaculis libero a gravida. Etiam laoreet vitae lectus porta dignissim. Proin aliquam et tortor vel aliquet. Donec vel blandit neque. Fusce ac elit gravida, finibus nisi a, consequat nulla.\n\nMauris venenatis sagittis sodales. Praesent vulputate feugiat accumsan. Sed at tincidunt eros. Aenean id tempor mauris, non suscipit orci. Vivamus et tincidunt enim. Sed ut cursus purus. Nam quis lorem imperdiet, sodales lorem rutrum, pretium lacus. Phasellus sagittis feugiat purus, at tristique sapien porttitor eget. Etiam tincidunt augue eu molestie mollis. Praesent ut arcu magna. Praesent maximus, nibh ut finibus pellentesque, dui tortor condimentum elit, vulputate volutpat lectus ipsum accumsan orci. Maecenas nulla velit, auctor et mi eget, placerat lacinia sapien. Nulla a enim mollis, aliquam libero in, bibendum massa. Integer ut urna eu ex commodo consectetur. Duis dignissim, lacus tincidunt viverra mollis, enim justo dignissim enim, tempus tincidunt nibh libero id nibh.',
     likes: 20,
     timeOfPreparationInMins: 20,
-    title: 'Ciasteczka',
+    title: 'Ciastka czekoladowe z jagodami',
     tags: dummyTags,
   },
   {
