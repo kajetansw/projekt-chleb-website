@@ -33,7 +33,7 @@ export const Home = (): JSX.Element => (
       <Heading fontSize={30} fontWeight="200" mt={16} mb={3}>
         Ostatnio dodane
       </Heading>
-      <RecipesGrid recipes={dummyRecipes}></RecipesGrid>
+      <RecipesGrid recipes={dummyRecipes} maxItems={6}></RecipesGrid>
     </main>
   </>
 );

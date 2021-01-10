@@ -17,6 +17,7 @@ import LikeIcon from '@/components/LikeIcon';
 import TitleHeading from '@/components/TitleHeading';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import IconBadge from '@/components/IconBadge';
+import formatMinutes from '@/utils/formatMinutes';
 
 interface GalleryProps {
   recipes: Recipe[];
@@ -62,7 +63,7 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             fontSize={14}
             mr={5}
           >
-            {recipes[viewedRecipeIdx].timeOfPreparationInMins}
+            {formatMinutes(recipes[viewedRecipeIdx].timeOfPreparationInMins)}
           </IconBadge>
           <IconBadge
             IconComponent={LikeIcon}

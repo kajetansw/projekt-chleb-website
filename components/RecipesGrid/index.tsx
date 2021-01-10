@@ -6,6 +6,7 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 import TitleHeading from '@/components/TitleHeading';
 import IconBadge from '@/components/IconBadge';
 import TagIcon from '@/components/TagIcon';
+import formatMinutes from '@/utils/formatMinutes';
 
 interface RecipesGridProps {
   recipes: Recipe[];
@@ -42,7 +43,7 @@ const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
                 iconSize={15}
                 mr={4}
               >
-                {r.timeOfPreparationInMins}
+                {formatMinutes(r.timeOfPreparationInMins)}
               </IconBadge>
               <IconBadge
                 IconComponent={TagIcon}
