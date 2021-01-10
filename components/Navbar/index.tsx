@@ -1,6 +1,6 @@
-import { Box, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Link } from '@chakra-ui/react';
 import NavbarLink from '@/components/NavbarLink';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useState } from 'react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
@@ -19,11 +19,11 @@ const Navbar = () => {
       direction={['column', 'column', 'column', 'row']}
     >
       <Flex justify="space-between">
-        <Link href="/">
-          <a>
-            <Image src="./logo.PNG" height={9} mr={[0, 0, 0, 40]} />
-          </a>
-        </Link>
+        <NextLink href="/">
+          <Link fontFamily="'Rye', cursive" fontSize={22} whiteSpace="pre" pt={1}>
+            PROJEKT CHLEB
+          </Link>
+        </NextLink>
 
         <Button display={{ base: 'inherit', lg: 'none' }} onClick={toggleMenu} variant="ghost">
           {isMenuVisible ? <CloseIcon h={3} w={3} /> : <HamburgerIcon h={4} w={4} />}
@@ -39,6 +39,7 @@ const Navbar = () => {
         mt={[4, 4, 4, 0]}
         py={[4, 4, 4, 0]}
         width="full"
+        ml={[0, 0, 0, 20]}
       >
         <Box>
           <NavbarLink href="/">PIERWSZE KROKI</NavbarLink>

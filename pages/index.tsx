@@ -20,6 +20,7 @@ export const Home = (): JSX.Element => (
         href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap"
         rel="stylesheet"
       />
+      <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
