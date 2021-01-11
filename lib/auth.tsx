@@ -3,7 +3,7 @@ import firebase from './firebase';
 
 interface Auth {
   user: firebase.User | null;
-  signinWithGithub: () => Promise<firebase.User | null>;
+  signinWithFacebook: () => Promise<firebase.User | null>;
   signout: () => Promise<void>;
 }
 
@@ -21,7 +21,7 @@ export const useAuth = () => {
 function useProvideAuth(): Auth {
   const [user, setUser] = useState<firebase.User | null>(null);
 
-  const signinWithGithub = () => {
+  const signinWithFacebook = () => {
     return firebase
       .auth()
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
@@ -54,7 +54,7 @@ function useProvideAuth(): Auth {
 
   return {
     user,
-    signinWithGithub,
+    signinWithFacebook,
     signout,
   };
 }

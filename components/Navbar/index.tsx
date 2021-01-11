@@ -6,6 +6,18 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import NavbarLink from '@/components/NavbarLink';
 import { useAuth } from '@/lib/auth';
 
+const AuthButton = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}) => (
+  <Button variant="ghost" px={2} fontSize="inherit" onClick={onClick}>
+    {children}
+  </Button>
+);
+
 const Navbar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const toggleMenu = () => setIsMenuVisible((prev) => !prev);
@@ -61,18 +73,9 @@ const Navbar = () => {
           />
 
           {auth?.user ? (
-            <Button variant="ghost" px={2} fontSize="inherit" onClick={() => auth.signout()}>
-              WYLOGUJ
-            </Button>
+            <AuthButton onClick={() => auth.signout()}>WYLOGUJ</AuthButton>
           ) : (
-            <Button
-              variant="ghost"
-              px={2}
-              fontSize="inherit"
-              onClick={() => auth.signinWithGithub()}
-            >
-              ZALOGUJ
-            </Button>
+            <AuthButton onClick={() => auth.signinWithFacebook()}>ZALOGUJ</AuthButton>
           )}
         </Box>
       </Flex>
