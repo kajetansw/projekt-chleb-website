@@ -18,7 +18,8 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/models": ["models.d.ts"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/lib/*": ["lib/*"]
     }
   },
   "exclude": ["node_modules", ".next", "out"],
