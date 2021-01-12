@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
+
+import { createUser } from './db';
 import firebase from './firebase';
 
 interface Auth {
@@ -27,6 +29,7 @@ function useProvideAuth(): Auth {
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((response) => {
         setUser(response.user);
+        response.user && createUser(response.user);
         return response.user;
       });
   };
