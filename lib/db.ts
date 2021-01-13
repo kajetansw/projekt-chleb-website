@@ -1,3 +1,4 @@
+import { Recipe } from '@/models';
 import firebase from './firebase';
 import 'firebase/firestore';
 
@@ -12,4 +13,12 @@ export function createUser(user: firebase.User) {
     photoURL: user.photoURL,
   };
   return firestore.collection('users').doc(user.uid).set(userData, { merge: true });
+}
+
+export function createRecipe(recipe: Omit<Recipe, 'uid' | 'likes'>) {
+  const recipeToAdd: Omit<Recipe, 'uid'> = {
+    ...recipe,
+    likes: 0,
+  };
+  return firestore.collection('sites').add(recipeToAdd);
 }

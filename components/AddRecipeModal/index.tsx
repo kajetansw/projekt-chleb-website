@@ -28,13 +28,18 @@ import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Recipe } from '@/models';
+import { createRecipe } from '@/lib/db';
 
 type FormFieldValues = Omit<Recipe, 'uid' | 'likes'>;
+
+function toStringArray(values: (string | number)[]): string[] {
+  return values.map((v) => `${v}`);
+}
 
 const AddRecipeModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit, getValues } = useForm<FormFieldValues>();
-  const [tags, setTags] = useState<React.ReactText[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const [ingredients, setIngredients] = useState<string[]>([]);
   const ingredientsInputRef = useRef<HTMLInputElement>(null!);
@@ -43,10 +48,9 @@ const AddRecipeModal = () => {
   const removeIngredient = (ingredient: string) =>
     setIngredients((curr) => curr.filter((c) => c !== ingredient));
 
-  const createRecipe = () => {
+  const onSubmit = () => {
     const recipeToSave = { ...getValues(), ingredients, tags };
-    // @TODO make ingredients an array instead string
-    // @TODO save it to Firestore
+    createRecipe(recipeToSave);
   };
 
   return (
@@ -61,7 +65,7 @@ const AddRecipeModal = () => {
           <ModalHeader>Dodaj przepis</ModalHeader>
           <ModalCloseButton />
 
-          <form id="addRecipeForm" onSubmit={handleSubmit(createRecipe)}>
+          <form id="addRecipeForm" onSubmit={handleSubmit(onSubmit)}>
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Tytuł</FormLabel>
@@ -112,7 +116,7 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Tagi</FormLabel>
-                <CheckboxGroup onChange={setTags}>
+                <CheckboxGroup onChange={(v) => setTags(toStringArray(v))}>
                   <SimpleGrid columns={3} spacingY={2}>
                     <Checkbox value="Chleb jasny">Chleb jasny</Checkbox>
                     <Checkbox value="Chleb ciemny">Chleb ciemny</Checkbox>
