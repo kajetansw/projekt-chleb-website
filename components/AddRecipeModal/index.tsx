@@ -22,6 +22,7 @@ import {
   SimpleGrid,
   Textarea,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { useState, useRef } from 'react';
@@ -37,6 +38,7 @@ function toStringArray(values: (string | number)[]): string[] {
 }
 
 const AddRecipeModal = () => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit, getValues } = useForm<FormFieldValues>();
   const [tags, setTags] = useState<string[]>([]);
@@ -50,7 +52,17 @@ const AddRecipeModal = () => {
 
   const onSubmit = () => {
     const recipeToSave = { ...getValues(), ingredients, tags };
-    createRecipe(recipeToSave);
+    createRecipe(recipeToSave).then(() => {
+      onClose();
+      toast({
+        position: 'top',
+        title: 'Przepis zapisany.',
+        description: 'Teraz możesz się nim podzielić z całym światem!',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    });
   };
 
   return (
