@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 import NavbarLink from '@/components/NavbarLink';
+import AddRecipeModal from '@/components/AddRecipeModal';
 import { useAuth } from '@/lib/auth';
 
 const AuthButton = ({
@@ -65,6 +66,8 @@ const Navbar = () => {
         </Box>
 
         <Box mt={[8, 8, 8, 0]}>
+          <AddRecipeModal />
+
           <Image
             display="inline"
             src={auth?.user?.photoURL ?? '/user.png'}
