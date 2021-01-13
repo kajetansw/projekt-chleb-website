@@ -1,9 +1,11 @@
 import {
+  Badge,
   Button,
   Checkbox,
   CheckboxGroup,
   FormControl,
   FormLabel,
+  HStack,
   Input,
   Modal,
   ModalBody,
@@ -21,8 +23,8 @@ import {
   Textarea,
   useDisclosure,
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { AddIcon, CloseIcon } from '@chakra-ui/icons';
+import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Recipe } from '@/models';
@@ -32,10 +34,17 @@ type FormFieldValues = Omit<Recipe, 'uid' | 'likes'>;
 const AddRecipeModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit, getValues } = useForm<FormFieldValues>();
-  const [checkboxGroupValue, setCheckboxGroupValue] = useState<React.ReactText[]>([]);
+  const [tags, setTags] = useState<React.ReactText[]>([]);
+
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const ingredientsInputRef = useRef<HTMLInputElement>(null!);
+  const addIngredient = () =>
+    setIngredients((curr) => [...curr, ingredientsInputRef.current.value]);
+  const removeIngredient = (ingredient: string) =>
+    setIngredients((curr) => curr.filter((c) => c !== ingredient));
 
   const createRecipe = () => {
-    const recipeToSave = { ...getValues(), tags: checkboxGroupValue };
+    const recipeToSave = { ...getValues(), ingredients, tags };
     // @TODO make ingredients an array instead string
     // @TODO save it to Firestore
   };
@@ -61,7 +70,17 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Składniki</FormLabel>
-                <Input ref={register} name="ingredients" placeholder="Składniki" />
+                <HStack mb={2}>
+                  <Input ref={ingredientsInputRef} name="ingredients" placeholder="Składniki" />
+                  <Button size="md" onClick={addIngredient}>
+                    <AddIcon />
+                  </Button>
+                </HStack>
+                {ingredients.map((ing, idx) => (
+                  <Badge m={1} cursor="pointer" key={idx} onClick={() => removeIngredient(ing)}>
+                    {ing} <CloseIcon h={2} />
+                  </Badge>
+                ))}
               </FormControl>
 
               <FormControl mt={4}>
@@ -93,7 +112,7 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Tagi</FormLabel>
-                <CheckboxGroup onChange={setCheckboxGroupValue}>
+                <CheckboxGroup onChange={setTags}>
                   <SimpleGrid columns={3} spacingY={2}>
                     <Checkbox value="Chleb jasny">Chleb jasny</Checkbox>
                     <Checkbox value="Chleb ciemny">Chleb ciemny</Checkbox>
