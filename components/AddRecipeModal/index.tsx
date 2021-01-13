@@ -45,8 +45,11 @@ const AddRecipeModal = () => {
 
   const [ingredients, setIngredients] = useState<string[]>([]);
   const ingredientsInputRef = useRef<HTMLInputElement>(null!);
-  const addIngredient = () =>
+  const addIngredient = () => {
     setIngredients((curr) => [...curr, ingredientsInputRef.current.value]);
+    ingredientsInputRef.current.value = '';
+    ingredientsInputRef.current.focus();
+  };
   const removeIngredient = (ingredient: string) =>
     setIngredients((curr) => curr.filter((c) => c !== ingredient));
 
