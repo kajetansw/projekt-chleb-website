@@ -31,7 +31,7 @@ import { useForm } from 'react-hook-form';
 import { Recipe } from '@/models';
 import { createRecipe } from '@/lib/db';
 
-type FormFieldValues = Omit<Recipe, 'uid' | 'likes'>;
+type FormFieldValues = Omit<Recipe, 'uid' | 'likes' | 'inputDate'>;
 
 function toStringArray(values: (string | number)[]): string[] {
   return values.map((v) => `${v}`);

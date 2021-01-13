@@ -15,9 +15,10 @@ export function createUser(user: firebase.User) {
   return firestore.collection('users').doc(user.uid).set(userData, { merge: true });
 }
 
-export function createRecipe(recipe: Omit<Recipe, 'uid' | 'likes'>) {
+export function createRecipe(recipe: Omit<Recipe, 'uid' | 'likes' | 'inputDate'>) {
   const recipeToAdd: Omit<Recipe, 'uid'> = {
     ...recipe,
+    inputDate: new Date(),
     likes: 0,
   };
   return firestore.collection('sites').add(recipeToAdd);
