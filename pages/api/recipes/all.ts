@@ -2,6 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import db from '@/lib/firebase-admin';
 import { Recipe } from '@/models';
 
+/**
+ * /recipes/all
+ *   GET
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const snapshot = await db.collection('recipes').get();
   const recipes: Recipe[] = [];

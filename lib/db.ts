@@ -18,7 +18,7 @@ export function createUser(user: firebase.User) {
 export function createRecipe(recipe: Omit<Recipe, 'uid' | 'likes' | 'inputDate'>) {
   const recipeToAdd: Omit<Recipe, 'uid'> = {
     ...recipe,
-    inputDate: new Date(),
+    inputDate: new Date().toISOString(),
     likes: 0,
   };
   return firestore.collection('recipes').add(recipeToAdd);

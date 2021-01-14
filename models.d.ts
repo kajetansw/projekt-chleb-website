@@ -7,5 +7,5 @@ export interface Recipe {
   likes: number;
   imageSrc: string;
   tags: string[];
-  inputDate: Date;
+  inputDate: string;
 }
