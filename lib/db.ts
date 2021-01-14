@@ -21,5 +21,5 @@ export function createRecipe(recipe: Omit<Recipe, 'uid' | 'likes' | 'inputDate'>
     inputDate: new Date(),
     likes: 0,
   };
-  return firestore.collection('sites').add(recipeToAdd);
+  return firestore.collection('recipes').add(recipeToAdd);
 }

@@ -1,11 +1,9 @@
 import {
-  Badge,
   Button,
   Checkbox,
   CheckboxGroup,
   FormControl,
   FormLabel,
-  HStack,
   Input,
   Modal,
   ModalBody,
@@ -24,12 +22,13 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { AddIcon, CloseIcon } from '@chakra-ui/icons';
-import { useState, useRef } from 'react';
+import { AddIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Recipe } from '@/models';
 import { createRecipe } from '@/lib/db';
+import MultiInput from '../MultiInput';
 
 type FormFieldValues = Omit<Recipe, 'uid' | 'likes' | 'inputDate'>;
 
@@ -41,17 +40,9 @@ const AddRecipeModal = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit, getValues } = useForm<FormFieldValues>();
-  const [tags, setTags] = useState<string[]>([]);
 
+  const [tags, setTags] = useState<string[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
-  const ingredientsInputRef = useRef<HTMLInputElement>(null!);
-  const addIngredient = () => {
-    setIngredients((curr) => [...curr, ingredientsInputRef.current.value]);
-    ingredientsInputRef.current.value = '';
-    ingredientsInputRef.current.focus();
-  };
-  const removeIngredient = (ingredient: string) =>
-    setIngredients((curr) => curr.filter((c) => c !== ingredient));
 
   const onSubmit = () => {
     const recipeToSave = { ...getValues(), ingredients, tags };
@@ -89,17 +80,11 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Składniki</FormLabel>
-                <HStack mb={2}>
-                  <Input ref={ingredientsInputRef} name="ingredients" placeholder="Składniki" />
-                  <Button size="md" onClick={addIngredient}>
-                    <AddIcon />
-                  </Button>
-                </HStack>
-                {ingredients.map((ing, idx) => (
-                  <Badge m={1} cursor="pointer" key={idx} onClick={() => removeIngredient(ing)}>
-                    {ing} <CloseIcon h={2} />
-                  </Badge>
-                ))}
+                <MultiInput
+                  onItemsChange={setIngredients}
+                  name="ingredients"
+                  placeholder="Składniki"
+                />
               </FormControl>
 
               <FormControl mt={4}>
