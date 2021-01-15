@@ -66,7 +66,7 @@ const Navbar = () => {
         </Box>
 
         <Box mt={[8, 8, 8, 0]}>
-          <AddRecipeModal />
+          {auth.user?.admin && <AddRecipeModal />}
 
           <Image
             display="inline"

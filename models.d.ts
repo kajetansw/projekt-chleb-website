@@ -9,3 +9,12 @@ export interface Recipe {
   tags: string[];
   inputDate: string;
 }
+
+export interface User {
+  uid: string;
+  email: string | null;
+  name: string | null;
+  provider: string | undefined;
+  photoURL: string | null;
+  admin: boolean;
+}

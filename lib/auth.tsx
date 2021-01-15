@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
+import formatUser from '@/utils/formatUser';
 import { createUser } from './db';
 import firebase from './firebase';
+import { User } from '@/models';
 
 interface Auth {
-  user: firebase.User | null;
+  user: User | null;
   signinWithFacebook: () => Promise<firebase.User | null>;
   signout: () => Promise<void>;
 }
@@ -21,15 +23,18 @@ export const useAuth = () => {
 };
 
 function useProvideAuth(): Auth {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const signinWithFacebook = () => {
     return firebase
       .auth()
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((response) => {
-        setUser(response.user);
-        response.user && createUser(response.user);
+        const user = formatUser(response.user!);
+        const { admin, ...userWithoutAdminInfo } = user;
+
+        setUser(user);
+        user && createUser(userWithoutAdminInfo);
         return response.user;
       });
   };
@@ -46,7 +51,7 @@ function useProvideAuth(): Auth {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setUser(user);
+        setUser(formatUser(user));
       } else {
         setUser(null);
       }

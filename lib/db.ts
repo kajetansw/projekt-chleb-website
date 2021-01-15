@@ -1,4 +1,4 @@
-import { Recipe } from '@/models';
+import { Recipe, User } from '@/models';
 import firebase from './firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -7,15 +7,8 @@ const firestore = firebase.firestore();
 
 export const FIREBASE_IMAGE_STORAGE_FOLDER = 'images';
 
-export function createUser(user: firebase.User) {
-  const userData = {
-    uid: user.uid,
-    email: user.email,
-    name: user.displayName,
-    provider: user.providerData[0]?.providerId,
-    photoURL: user.photoURL,
-  };
-  return firestore.collection('users').doc(user.uid).set(userData, { merge: true });
+export function createUser(user: Omit<User, 'admin'>) {
+  return firestore.collection('users').doc(user.uid).set(user, { merge: true });
 }
 
 export function createRecipe(
