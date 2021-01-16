@@ -1,20 +1,18 @@
 import Head from 'next/head';
 import { Heading } from '@chakra-ui/react';
-import { GetStaticPropsResult } from 'next';
+import useSWR from 'swr';
 
 import Navbar from '@/components/Navbar';
 import Gallery from '@/components/Gallery';
 import { dummyRecipes } from 'DUMMY_DATA';
 import RecipesGrid from '@/components/RecipesGrid';
 import Footer from '@/components/Footer';
-import { Recipe } from '@/models';
-import { getPopularRecipes } from '@/lib/db-admin';
+import firebaseFetcher from '@/utils/firebaseFetcher';
+import GallerySkeleton from '@/components/GallerySkeleton';
 
-interface HomeProps {
-  popularRecipes: Recipe[];
-}
+export const Home = (): JSX.Element => {
+  const { data } = useSWR('/api/recipes/popular?amount=3', firebaseFetcher);
 
-export const Home = ({ popularRecipes }: HomeProps): JSX.Element => {
   return (
     <>
       <Head>
@@ -38,7 +36,7 @@ export const Home = ({ popularRecipes }: HomeProps): JSX.Element => {
         <Heading fontSize={30} fontWeight="200" mb={3}>
           Najwyżej oceniane
         </Heading>
-        <Gallery recipes={popularRecipes}></Gallery>
+        {!data ? <GallerySkeleton></GallerySkeleton> : <Gallery recipes={data}></Gallery>}
 
         <Heading fontSize={30} fontWeight="200" mt={16} mb={3}>
           Ostatnio dodane
@@ -50,18 +48,5 @@ export const Home = ({ popularRecipes }: HomeProps): JSX.Element => {
     </>
   );
 };
-
-export async function getStaticProps(): Promise<
-  GetStaticPropsResult<{ popularRecipes: Recipe[] }>
-> {
-  const popularRecipes = await getPopularRecipes(3);
-
-  return {
-    props: {
-      popularRecipes,
-    },
-    revalidate: 1,
-  };
-}
 
 export default Home;

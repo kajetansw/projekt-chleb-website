@@ -1,7 +1,7 @@
-const firebaseFetcher = async (url: string, token: string) => {
+const firebaseFetcher = async (url: string) => {
   const res = await fetch(url, {
     method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json', token }),
+    headers: new Headers({ 'Content-Type': 'application/json' }),
     credentials: 'same-origin',
   });
 
