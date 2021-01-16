@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import db from '@/lib/firebase-admin';
+import { firestore } from '@/lib/firebase-admin';
 import { Recipe } from '@/models';
 
 /**
@@ -7,7 +7,7 @@ import { Recipe } from '@/models';
  *   GET
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const snapshot = await db.collection('recipes').get();
+  const snapshot = await firestore.collection('recipes').get();
   const recipes: Recipe[] = [];
 
   snapshot.forEach((doc) => {

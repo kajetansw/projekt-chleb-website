@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import db from '@/lib/firebase-admin';
 import { Recipe } from '@/models';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getPopularRecipes } from '@/lib/db-admin';
 
 /**
  * /recipes/popular
@@ -9,15 +9,7 @@ import { Recipe } from '@/models';
  *       - amount: number
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const snapshot = await db.collection('recipes').orderBy('likes', 'desc').get();
-
-  const recipes: Recipe[] = [];
-  const amount: number = Number(req.query.amount) || 0;
-
-  for (let i = 0; i < amount; i++) {
-    const doc = snapshot.docs[i];
-    recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
-  }
+  const recipes: Recipe[] = await getPopularRecipes(Number(req.query.amount) || 0);
 
   res.status(200).json(recipes);
 };

@@ -8,7 +8,12 @@ if (!admin.apps.length) {
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     }),
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_WITHOUT_PREFIX,
   });
 }
 
-export default admin.firestore();
+const auth = admin.auth();
+const firestore = admin.firestore();
+const storage = admin.storage();
+
+export { auth, firestore, storage };

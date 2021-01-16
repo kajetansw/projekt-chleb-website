@@ -30,7 +30,7 @@ const useCroppedRecipeInstruction = (recipeInstruction: string) => {
 
 const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
   if (!recipes?.length) {
-    return <Heading>No recipes found!</Heading>;
+    return <Heading>Brak przepisów!</Heading>;
   }
 
   const [viewedRecipeIdx, setViewedRecipeIdx] = useState(0);

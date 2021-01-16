@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import db from '@/lib/firebase-admin';
+import { firestore } from '@/lib/firebase-admin';
 import { Recipe } from '@/models';
 
 /**
@@ -9,7 +9,7 @@ import { Recipe } from '@/models';
  *       - amount: number
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const snapshot = await db.collection('recipes').orderBy('inputDate', 'desc').get();
+  const snapshot = await firestore.collection('recipes').orderBy('inputDate', 'desc').get();
 
   const recipes: Recipe[] = [];
   const amount: number = Number(req.query.amount) || 0;

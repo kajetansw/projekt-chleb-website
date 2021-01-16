@@ -5,8 +5,6 @@ import 'firebase/storage';
 
 const firestore = firebase.firestore();
 
-export const FIREBASE_IMAGE_STORAGE_FOLDER = 'images';
-
 export function createUser(user: Omit<User, 'admin' | 'token'>) {
   return firestore.collection('users').doc(user.uid).set(user, { merge: true });
 }
@@ -32,7 +30,10 @@ function saveFiles(files: File[]) {
     }
 
     const storageRef = firebase.storage().ref();
-    const imageRef = storageRef.child(FIREBASE_IMAGE_STORAGE_FOLDER + '/' + file.name);
+    const imageRef = storageRef.child(
+      process.env.NEXT_PUBLIC_FIREBASE_IMAGE_STORAGE_FOLDER + '/' + file.name
+    );
+
     return imageRef.put(file);
   });
 }
