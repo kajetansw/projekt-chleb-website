@@ -1,5 +1,5 @@
 import { Recipe } from '@/models';
-import { Box, Flex, Grid } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 
 import ResponsiveImage from '@/components/ResponsiveImage';
@@ -21,6 +21,10 @@ const limitItems = <T,>(items: T[], maxItems: number | undefined): T[] => {
 };
 
 const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
+  if (!recipes?.length) {
+    return <Heading>Brak przepisów!</Heading>;
+  }
+
   const viewedRecipes = limitItems(recipes, maxItems);
 
   return (
