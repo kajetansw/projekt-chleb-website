@@ -36,7 +36,7 @@
     "firebase-admin": "^9.4.2",
     "framer-motion": "^3.1.4",
     "jwt-decode": "^3.1.2",
-    "next": "latest",
+    "next": "^10.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.4",

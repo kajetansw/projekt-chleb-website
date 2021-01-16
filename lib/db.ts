@@ -7,7 +7,7 @@ const firestore = firebase.firestore();
 
 export const FIREBASE_IMAGE_STORAGE_FOLDER = 'images';
 
-export function createUser(user: Omit<User, 'admin'>) {
+export function createUser(user: Omit<User, 'admin' | 'token'>) {
   return firestore.collection('users').doc(user.uid).set(user, { merge: true });
 }
 

@@ -17,4 +17,5 @@ export interface User {
   provider: string | undefined;
   photoURL: string | null;
   admin: boolean;
+  token: string;
 }

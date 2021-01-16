@@ -31,10 +31,10 @@ function useProvideAuth(): Auth {
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((response) => {
         const user = formatUser(response.user!);
-        const { admin, ...userWithoutAdminInfo } = user;
+        const { admin, token, ...userWithoutAuthInfo } = user;
 
         setUser(user);
-        user && createUser(userWithoutAdminInfo);
+        user && createUser(userWithoutAuthInfo);
         return response.user;
       });
   };
