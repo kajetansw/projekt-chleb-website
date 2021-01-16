@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { firestore } from '@/lib/firebase-admin';
 import { Recipe } from '@/models';
+import { getNewestRecipes } from '@/lib/db-admin';
 
 /**
  * /recipes/newest
@@ -9,15 +9,7 @@ import { Recipe } from '@/models';
  *       - amount: number
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const snapshot = await firestore.collection('recipes').orderBy('inputDate', 'desc').get();
-
-  const recipes: Recipe[] = [];
-  const amount: number = Number(req.query.amount) || 0;
-
-  for (let i = 0; i < amount; i++) {
-    const doc = snapshot.docs[i];
-    recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
-  }
+  const recipes: Recipe[] = await getNewestRecipes(Number(req.query.amount) || 0);
 
   res.status(200).json(recipes);
 };

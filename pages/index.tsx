@@ -4,14 +4,15 @@ import useSWR from 'swr';
 
 import Navbar from '@/components/Navbar';
 import Gallery from '@/components/Gallery';
-import { dummyRecipes } from 'DUMMY_DATA';
 import RecipesGrid from '@/components/RecipesGrid';
 import Footer from '@/components/Footer';
 import firebaseFetcher from '@/utils/firebaseFetcher';
 import GallerySkeleton from '@/components/GallerySkeleton';
+import RecipeGridSkeleton from '@/components/RecipeGridSkeleton';
 
 export const Home = (): JSX.Element => {
-  const { data } = useSWR('/api/recipes/popular?amount=3', firebaseFetcher);
+  const { data: popularRecipes } = useSWR('/api/recipes/popular?amount=3', firebaseFetcher);
+  const { data: newestRecipes } = useSWR('/api/recipes/newest?amount=6', firebaseFetcher);
 
   return (
     <>
@@ -36,12 +37,20 @@ export const Home = (): JSX.Element => {
         <Heading fontSize={30} fontWeight="200" mb={3}>
           Najwyżej oceniane
         </Heading>
-        {!data ? <GallerySkeleton></GallerySkeleton> : <Gallery recipes={data}></Gallery>}
+        {!popularRecipes ? (
+          <GallerySkeleton></GallerySkeleton>
+        ) : (
+          <Gallery recipes={popularRecipes}></Gallery>
+        )}
 
         <Heading fontSize={30} fontWeight="200" mt={16} mb={3}>
           Ostatnio dodane
         </Heading>
-        <RecipesGrid recipes={dummyRecipes} maxItems={6}></RecipesGrid>
+        {!newestRecipes ? (
+          <RecipeGridSkeleton></RecipeGridSkeleton>
+        ) : (
+          <RecipesGrid recipes={newestRecipes} maxItems={6}></RecipesGrid>
+        )}
 
         <Footer mt={20} mb={8}></Footer>
       </main>
