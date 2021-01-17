@@ -7,6 +7,7 @@ import TitleHeading from '@/components/TitleHeading';
 import IconBadge from '@/components/IconBadge';
 import TagIcon from '@/components/TagIcon';
 import formatMinutes from '@/utils/formatMinutes';
+import StyledLink from '@/components/StyledLink';
 
 interface RecipesGridProps {
   recipes: Recipe[];
@@ -59,7 +60,9 @@ const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
                 {limitItems(r.tags, 2).join(', ')}
               </IconBadge>
             </Box>
-            <TitleHeading fontSize={22}>{r.title}</TitleHeading>
+            <StyledLink href={'p/' + r.uid}>
+              <TitleHeading fontSize={22}>{r.title}</TitleHeading>
+            </StyledLink>
           </Flex>
         ))}
       </Grid>
