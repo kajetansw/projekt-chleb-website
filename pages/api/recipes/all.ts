@@ -1,18 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { firestore } from '@/lib/firebase-admin';
-import { Recipe } from '@/models';
+import { getAllRecipes } from '@/lib/db-admin';
 
 /**
  * /recipes/all
  *   GET
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const snapshot = await firestore.collection('recipes').get();
-  const recipes: Recipe[] = [];
-
-  snapshot.forEach((doc) => {
-    recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
-  });
+  const recipes = await getAllRecipes();
 
   res.status(200).json(recipes);
 };

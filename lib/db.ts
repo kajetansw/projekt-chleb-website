@@ -1,4 +1,4 @@
-import { Recipe, User } from '@/models';
+import { RecipeFormInput, RecipeDb, User } from '@/models';
 import firebase from './firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -9,11 +9,8 @@ export function createUser(user: Omit<User, 'admin' | 'token'>) {
   return firestore.collection('users').doc(user.uid).set(user, { merge: true });
 }
 
-export function createRecipe(
-  recipe: Omit<Recipe, 'uid' | 'likes' | 'inputDate' | 'imageSrc'>,
-  imgFiles: File[]
-) {
-  const recipeToAdd: Omit<Recipe, 'uid'> = {
+export function createRecipe(recipe: RecipeFormInput, imgFiles: File[]) {
+  const recipeToAdd: RecipeDb = {
     ...recipe,
     inputDate: new Date().toISOString(),
     likes: 0,

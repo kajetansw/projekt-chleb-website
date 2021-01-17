@@ -29,7 +29,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Dropzone from 'react-dropzone';
 
-import { Recipe } from '@/models';
+import { Recipe, RecipeFormInput } from '@/models';
 import { createRecipe } from '@/lib/db';
 import MultiInput from '@/components/MultiInput';
 
@@ -49,7 +49,7 @@ const AddRecipeModal = () => {
   const [imgFiles, setImgFiles] = useState<File[]>([]);
 
   const onSubmit = () => {
-    const recipeToSave = { ...getValues(), ingredients, tags };
+    const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
     createRecipe(recipeToSave, imgFiles).then(() => {
       onClose();
       toast({

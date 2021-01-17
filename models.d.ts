@@ -10,6 +10,10 @@ export interface Recipe {
   inputDate: string;
 }
 
+export type RecipeDb = Omit<Recipe, 'uid'>;
+
+export type RecipeFormInput = Omit<Recipe, 'uid' | 'likes' | 'inputDate' | 'imageSrc'>;
+
 export interface User {
   uid: string;
   email: string | null;

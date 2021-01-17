@@ -41,6 +41,24 @@ export async function getNewestRecipes(amount: number) {
   }
 }
 
+export async function getAllRecipes() {
+  const snapshot = await firestore.collection('recipes').get();
+  const recipes: Recipe[] = [];
+
+  snapshot.forEach((doc) => {
+    recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
+  });
+
+  return recipes;
+}
+
+export async function getRecipeWithId(id: string): Promise<Recipe | undefined> {
+  const snapshot = await firestore.collection('recipes').doc(id).get();
+  const recipe = snapshot.data() as Recipe | undefined;
+
+  return recipe;
+}
+
 async function getImageDownloadUrl(imageName: string) {
   const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
   const bucket = storage.bucket(bucketName);
