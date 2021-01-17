@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Footer from '../Footer';
 import Navbar from '../Navbar';
 
 interface PageShellProps {
@@ -16,6 +17,8 @@ const PageShell = ({ children, title }: PageShellProps) => {
       <Navbar></Navbar>
 
       <main>{children}</main>
+
+      <Footer mt={20} mb={8}></Footer>
     </>
   );
 };

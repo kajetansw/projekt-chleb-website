@@ -3,7 +3,6 @@ import useSWR from 'swr';
 
 import Gallery from '@/components/Gallery';
 import RecipesGrid from '@/components/RecipesGrid';
-import Footer from '@/components/Footer';
 import firebaseFetcher from '@/utils/firebaseFetcher';
 import GallerySkeleton from '@/components/GallerySkeleton';
 import RecipeGridSkeleton from '@/components/RecipeGridSkeleton';
@@ -32,8 +31,6 @@ export const Home = (): JSX.Element => {
       ) : (
         <RecipesGrid recipes={newestRecipes} maxItems={6}></RecipesGrid>
       )}
-
-      <Footer mt={20} mb={8}></Footer>
     </PageShell>
   );
 };
