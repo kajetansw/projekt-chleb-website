@@ -19,6 +19,7 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 10,
     title: 'Chleb pszenny',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
   {
     uid: '2',
@@ -30,6 +31,7 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 30,
     title: 'Ciastka czekoladowe z jagodami',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
   {
     uid: '3',
@@ -41,6 +43,7 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 50,
     title: 'Chleb żytni',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
   {
     uid: '4',
@@ -52,6 +55,7 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 60,
     title: 'Chleb pszenny XXL',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
   {
     uid: '5',
@@ -63,6 +67,7 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 80,
     title: 'Ciasteczka XXL',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
   {
     uid: '6',
@@ -74,5 +79,6 @@ export const dummyRecipes: Recipe[] = [
     timeOfPreparationInMins: 100,
     title: 'Chleb żytni XXL',
     tags: dummyTags,
+    inputDate: new Date().toISOString(),
   },
 ];

@@ -18,6 +18,7 @@ import TitleHeading from '@/components/TitleHeading';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import IconBadge from '@/components/IconBadge';
 import formatMinutes from '@/utils/formatMinutes';
+import StyledLink from '@/components/StyledLink';
 
 interface GalleryProps {
   recipes: Recipe[];
@@ -30,7 +31,7 @@ const useCroppedRecipeInstruction = (recipeInstruction: string) => {
 
 const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
   if (!recipes?.length) {
-    return <Heading>No recipes found!</Heading>;
+    return <Heading>Brak przepisów!</Heading>;
   }
 
   const [viewedRecipeIdx, setViewedRecipeIdx] = useState(0);
@@ -75,9 +76,11 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             {recipes[viewedRecipeIdx].likes}
           </IconBadge>
 
-          <TitleHeading my={6} fontSize={36}>
-            {recipes[viewedRecipeIdx].title}
-          </TitleHeading>
+          <StyledLink href={'p/' + recipes[viewedRecipeIdx].uid}>
+            <TitleHeading my={6} fontSize={36}>
+              {recipes[viewedRecipeIdx].title}
+            </TitleHeading>
+          </StyledLink>
 
           <UnorderedList fontSize={18} mb={6}>
             {recipes[viewedRecipeIdx].ingredients.map((ingredient) => (
@@ -91,12 +94,14 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
         </Box>
 
         <Flex position="relative" alignSelf="center">
-          <ResponsiveImage
-            width={{ base: 625, lg: 1000 }}
-            height={{ base: 500, lg: 800 }}
-            src={recipes[viewedRecipeIdx].imageSrc}
-            objectFit="cover"
-          ></ResponsiveImage>
+          <StyledLink href={'p/' + recipes[viewedRecipeIdx].uid}>
+            <ResponsiveImage
+              width={{ base: 625, lg: 1000 }}
+              height={{ base: 500, lg: 800 }}
+              src={recipes[viewedRecipeIdx].imageSrc}
+              objectFit="cover"
+            ></ResponsiveImage>
+          </StyledLink>
           <Button
             variant="ghost"
             p={0}

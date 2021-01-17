@@ -1,12 +1,14 @@
-import { Link as StyledLink } from '@chakra-ui/react';
-import Link from 'next/link';
+import StyledLink from '../StyledLink';
 
 const NavbarLink = ({ children, href }) => (
-  <Link href={href}>
-    <StyledLink display={{ base: 'block', lg: 'initial' }} mr={[0, 0, 0, 8]} mb={[1, 1, 1, 0]}>
-      {children}
-    </StyledLink>
-  </Link>
+  <StyledLink
+    href={href}
+    display={{ base: 'block', lg: 'initial' }}
+    mr={[0, 0, 0, 8]}
+    mb={[1, 1, 1, 0]}
+  >
+    {children}
+  </StyledLink>
 );
 
 export default NavbarLink;

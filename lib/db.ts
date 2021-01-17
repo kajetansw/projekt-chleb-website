@@ -1,0 +1,36 @@
+import { RecipeFormInput, RecipeDb, User } from '@/models';
+import firebase from './firebase';
+import 'firebase/firestore';
+import 'firebase/storage';
+
+const firestore = firebase.firestore();
+
+export function createUser(user: Omit<User, 'admin' | 'token'>) {
+  return firestore.collection('users').doc(user.uid).set(user, { merge: true });
+}
+
+export function createRecipe(recipe: RecipeFormInput, imgFiles: File[]) {
+  const recipeToAdd: RecipeDb = {
+    ...recipe,
+    inputDate: new Date().toISOString(),
+    likes: 0,
+    imageSrc: imgFiles?.[0]?.name || '',
+  };
+
+  return Promise.all([saveFiles(imgFiles), firestore.collection('recipes').add(recipeToAdd)]);
+}
+
+function saveFiles(files: File[]) {
+  files.forEach((file) => {
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      throw new Error('Not supported file type!');
+    }
+
+    const storageRef = firebase.storage().ref();
+    const imageRef = storageRef.child(
+      process.env.NEXT_PUBLIC_FIREBASE_IMAGE_STORAGE_FOLDER + '/' + file.name
+    );
+
+    return imageRef.put(file);
+  });
+}
