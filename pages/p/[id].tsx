@@ -1,9 +1,10 @@
 import { GetStaticPathsResult, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
+import { Heading } from '@chakra-ui/react';
 
 import { Recipe } from '@/models';
 import { getAllRecipes, getRecipeWithId } from '@/lib/db-admin';
-import { Heading } from '@chakra-ui/react';
+import PageShell from '@/components/PageShell';
 
 interface RecipeProps {
   recipe: Recipe | undefined;
@@ -13,13 +14,25 @@ const RecipeView = ({ recipe }: RecipeProps) => {
   const router = useRouter();
 
   if (!recipe) {
-    return <Heading>Nie ma takiego przepisu!</Heading>;
+    return (
+      <PageShell title="Nie ma takiego przepisu!">
+        <Heading>Nie ma takiego przepisu!</Heading>
+      </PageShell>
+    );
   }
   if (router.isFallback) {
-    return <Heading>Ładowanie...</Heading>;
+    return (
+      <PageShell title="Ładowanie...">
+        <Heading>Ładowanie...</Heading>
+      </PageShell>
+    );
   }
 
-  return <div>{recipe.title}</div>;
+  return (
+    <PageShell title={recipe.title}>
+      <Heading>{recipe.title}</Heading>
+    </PageShell>
+  );
 };
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult<{ id: string }>> {
