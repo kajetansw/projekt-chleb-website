@@ -1,6 +1,6 @@
 import { GetStaticPathsResult, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, UnorderedList, ListItem, Text } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
 
 import { Recipe } from '@/models';
@@ -44,10 +44,10 @@ const RecipeView = ({ recipe }: RecipeProps) => {
         objectFit="cover"
       ></ResponsiveImage>
 
-      <TitleHeading fontSize={48} mt={10} mb={3}>
+      <TitleHeading fontSize={42} mt={10} mb={4}>
         {recipe.title}
       </TitleHeading>
-      <Flex>
+      <Flex direction={['column', 'row']}>
         <IconBadge
           IconComponent={TimeIcon}
           color="#000000"
@@ -59,6 +59,7 @@ const RecipeView = ({ recipe }: RecipeProps) => {
           {formatMinutes(recipe.timeOfPreparationInMins)}
         </IconBadge>
         <IconBadge
+          my={[4, 0]}
           IconComponent={TagIcon}
           color="#000000"
           fontSize={18}
@@ -78,6 +79,26 @@ const RecipeView = ({ recipe }: RecipeProps) => {
         >
           {recipe.likes}
         </IconBadge>
+      </Flex>
+
+      <Flex direction={['column', 'column', 'row']} mt={12}>
+        <Box flexBasis="33%" mr={14} mb={[8, 8, 0]}>
+          <Heading fontSize={24} mb={5}>
+            Składniki
+          </Heading>
+          <UnorderedList fontSize={18}>
+            {recipe.ingredients.map((ingredient) => (
+              <ListItem key={ingredient}>{ingredient}</ListItem>
+            ))}
+          </UnorderedList>
+        </Box>
+
+        <Box flexBasis="67%">
+          <Heading fontSize={24} mb={5}>
+            Przygotowanie
+          </Heading>
+          <Text fontSize={18}>{recipe.instruction}</Text>
+        </Box>
       </Flex>
     </PageShell>
   );
