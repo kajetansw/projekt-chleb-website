@@ -32,38 +32,38 @@ const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
     <>
       <Grid templateColumns="repeat(auto-fill, minmax(220px, 1fr))" gridGap={10}>
         {viewedRecipes.map((r) => (
-          <Flex key={r.uid} flexDir="column">
-            <ResponsiveImage
-              src={r.imageSrc}
-              width={{ base: 220 }}
-              height={{ base: 320 }}
-              objectFit="cover"
-            ></ResponsiveImage>
-            <Box mt={2} mb={3}>
-              <IconBadge
-                IconComponent={TimeIcon}
-                color="#828282"
-                fontSize={12}
-                iconColor="#828282"
-                iconSize={15}
-                mr={4}
-              >
-                {formatMinutes(r.timeOfPreparationInMins)}
-              </IconBadge>
-              <IconBadge
-                IconComponent={TagIcon}
-                color="#828282"
-                fontSize={12}
-                iconColor="#828282"
-                iconSize={15}
-              >
-                {limitItems(r.tags, 2).join(', ')}
-              </IconBadge>
-            </Box>
-            <StyledLink href={'p/' + r.uid}>
+          <StyledLink key={r.uid} href={'p/' + r.uid}>
+            <Flex flexDir="column">
+              <ResponsiveImage
+                src={r.imageSrc}
+                width={{ base: 220 }}
+                height={{ base: 320 }}
+                objectFit="cover"
+              ></ResponsiveImage>
+              <Box mt={2} mb={3}>
+                <IconBadge
+                  IconComponent={TimeIcon}
+                  color="#828282"
+                  fontSize={12}
+                  iconColor="#828282"
+                  iconSize={15}
+                  mr={4}
+                >
+                  {formatMinutes(r.timeOfPreparationInMins)}
+                </IconBadge>
+                <IconBadge
+                  IconComponent={TagIcon}
+                  color="#828282"
+                  fontSize={12}
+                  iconColor="#828282"
+                  iconSize={15}
+                >
+                  {limitItems(r.tags, 2).join(', ')}
+                </IconBadge>
+              </Box>
               <TitleHeading fontSize={22}>{r.title}</TitleHeading>
-            </StyledLink>
-          </Flex>
+            </Flex>
+          </StyledLink>
         ))}
       </Grid>
     </>
