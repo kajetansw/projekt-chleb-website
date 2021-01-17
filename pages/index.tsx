@@ -7,10 +7,18 @@ import firebaseFetcher from '@/utils/firebaseFetcher';
 import GallerySkeleton from '@/components/GallerySkeleton';
 import RecipeGridSkeleton from '@/components/RecipeGridSkeleton';
 import PageShell from '@/components/PageShell';
+import { useAuth } from '@/lib/auth';
 
 export const Home = (): JSX.Element => {
-  const { data: popularRecipes } = useSWR('/api/recipes/popular?amount=3', firebaseFetcher);
-  const { data: newestRecipes } = useSWR('/api/recipes/newest?amount=6', firebaseFetcher);
+  const auth = useAuth();
+  const { data: popularRecipes } = useSWR(
+    ['/api/recipes/popular?amount=3', auth.user?.token],
+    firebaseFetcher
+  );
+  const { data: newestRecipes } = useSWR(
+    ['/api/recipes/newest?amount=6', auth.user?.token],
+    firebaseFetcher
+  );
 
   return (
     <PageShell title="Projekt Chleb">
