@@ -2,8 +2,8 @@ import { useBreakpointValue } from '@chakra-ui/react';
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
 
 type ResponsiveImageProps = Omit<NextImageProps, 'width' | 'height'> & {
-  width: Record<string, number> | number[];
-  height: Record<string, number> | number[];
+  width: Record<string, number | string> | number[];
+  height: Record<string, number | string> | number[];
 };
 
 const ResponsiveImage = ({ width, height, ...nextImageProps }: ResponsiveImageProps) => {

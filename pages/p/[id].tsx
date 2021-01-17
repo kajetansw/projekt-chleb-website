@@ -5,6 +5,8 @@ import { Heading } from '@chakra-ui/react';
 import { Recipe } from '@/models';
 import { getAllRecipes, getRecipeWithId } from '@/lib/db-admin';
 import PageShell from '@/components/PageShell';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import TitleHeading from '@/components/TitleHeading';
 
 interface RecipeProps {
   recipe: Recipe | undefined;
@@ -30,7 +32,13 @@ const RecipeView = ({ recipe }: RecipeProps) => {
 
   return (
     <PageShell title={recipe.title}>
-      <Heading>{recipe.title}</Heading>
+      <ResponsiveImage
+        src={recipe.imageSrc}
+        width={{ base: 600, sm: 1000, md: 3000 }}
+        height={{ base: 525, sm: 400, md: 800 }}
+        objectFit="cover"
+      ></ResponsiveImage>
+      <TitleHeading mt={10}>{recipe.title}</TitleHeading>
     </PageShell>
   );
 };

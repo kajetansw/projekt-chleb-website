@@ -45,9 +45,11 @@ export async function getAllRecipes() {
   const snapshot = await firestore.collection('recipes').get();
   const recipes: Recipe[] = [];
 
-  snapshot.forEach((doc) => {
+  for (const doc of snapshot.docs) {
+    const recipe = { uid: doc.id, ...doc.data() } as Recipe;
+    recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
     recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
-  });
+  }
 
   return recipes;
 }
@@ -55,6 +57,9 @@ export async function getAllRecipes() {
 export async function getRecipeWithId(id: string): Promise<Recipe | undefined> {
   const snapshot = await firestore.collection('recipes').doc(id).get();
   const recipe = snapshot.data() as Recipe | undefined;
+  if (recipe) {
+    recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
+  }
 
   return recipe;
 }
