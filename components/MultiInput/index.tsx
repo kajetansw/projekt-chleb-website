@@ -1,6 +1,8 @@
-import { AddIcon, CloseIcon } from '@chakra-ui/icons';
-import { Badge, Button, HStack, Input, InputProps } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
+import { Button, HStack, Input, InputProps } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
+
+import IngredientBadge from '@/components/IngredientBadge';
 
 type MultiInputProps = InputProps & {
   onItemsChange: (values: string[]) => void;
@@ -32,9 +34,9 @@ const MultiInput = ({ onItemsChange, ...inputProps }: MultiInputProps) => {
         </Button>
       </HStack>
       {items.map((item, idx) => (
-        <Badge m={1} cursor="pointer" key={idx} onClick={() => removeItem(item)}>
-          {item} <CloseIcon h={2} />
-        </Badge>
+        <IngredientBadge key={idx} onClose={() => removeItem(item)} m={1}>
+          {item}
+        </IngredientBadge>
       ))}
     </>
   );
