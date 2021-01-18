@@ -97,7 +97,9 @@ const RecipeView = ({ recipe }: RecipeProps) => {
           <Heading fontSize={24} mb={5}>
             Przygotowanie
           </Heading>
-          <Text fontSize={18}>{recipe.instruction}</Text>
+          <Text whiteSpace="pre-wrap" textAlign="justify" fontSize={18}>
+            {recipe.instruction}
+          </Text>
         </Box>
       </Flex>
     </PageShell>
