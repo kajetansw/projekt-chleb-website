@@ -79,7 +79,7 @@ const AddRecipeModal = () => {
         <AddIcon mr={3} /> Dodaj przepis
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onModalClose}>
+      <Modal isOpen={isOpen} onClose={onModalClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Dodaj przepis</ModalHeader>
@@ -103,7 +103,7 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Instrukcja</FormLabel>
-                <Textarea ref={register} name="instruction" rows={5} placeholder="Instrukcja" />
+                <Textarea ref={register} name="instruction" rows={10} placeholder="Instrukcja" />
               </FormControl>
 
               <FormControl mt={4}>
