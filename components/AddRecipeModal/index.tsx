@@ -73,6 +73,10 @@ const AddRecipeModal = () => {
     }
   };
 
+  const preventSubmitOnEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.keyCode === 13) e.preventDefault();
+  };
+
   return (
     <>
       <Button mr={4} onClick={onOpen}>
@@ -85,7 +89,11 @@ const AddRecipeModal = () => {
           <ModalHeader>Dodaj przepis</ModalHeader>
           <ModalCloseButton />
 
-          <form id="addRecipeForm" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            id="addRecipeForm"
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => preventSubmitOnEnter(e)}
+          >
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Tytuł</FormLabel>
