@@ -2,7 +2,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Button, HStack, Input, InputProps } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
-import IngredientBadge from '@/components/IngredientBadge';
+import EditableItemBadge from '@/components/EditableItemBadge';
 
 type MultiInputProps = InputProps & {
   onItemsChange: (values: string[]) => void;
@@ -20,6 +20,11 @@ const MultiInput = ({ onItemsChange, ...inputProps }: MultiInputProps) => {
   const removeItem = (item: string) => {
     setItems((currentItems) => currentItems.filter((c) => c !== item));
   };
+  const editItem = (item: string) => {
+    setItems((currentItems) => currentItems.filter((c) => c !== item));
+    inputRef.current.value = item;
+    inputRef.current.focus();
+  };
 
   useEffect(() => {
     onItemsChange(items);
@@ -34,9 +39,14 @@ const MultiInput = ({ onItemsChange, ...inputProps }: MultiInputProps) => {
         </Button>
       </HStack>
       {items.map((item, idx) => (
-        <IngredientBadge key={idx} onClose={() => removeItem(item)} m={1}>
+        <EditableItemBadge
+          key={idx}
+          onEdit={() => editItem(item)}
+          onClose={() => removeItem(item)}
+          m={1}
+        >
           {item}
-        </IngredientBadge>
+        </EditableItemBadge>
       ))}
     </>
   );
