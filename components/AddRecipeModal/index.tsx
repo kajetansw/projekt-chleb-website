@@ -42,7 +42,7 @@ function toStringArray(values: (string | number)[]): string[] {
 const AddRecipeModal = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { register, handleSubmit, getValues } = useForm<FormFieldValues>();
+  const { register, handleSubmit, getValues, formState, reset } = useForm<FormFieldValues>();
 
   const [tags, setTags] = useState<string[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -51,7 +51,7 @@ const AddRecipeModal = () => {
   const onSubmit = () => {
     const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
     createRecipe(recipeToSave, imgFiles).then(() => {
-      onClose();
+      onModalClose();
       toast({
         position: 'top',
         title: 'Przepis zapisany.',
@@ -63,13 +63,23 @@ const AddRecipeModal = () => {
     });
   };
 
+  const onModalClose = () => {
+    const isFormTouched =
+      Object.keys(formState.touched).some((k) => !!formState.touched[k]) || ingredients.length > 0;
+
+    if (!isFormTouched || (isFormTouched && confirm('Czy na pewno chcesz porzucić zmiany?'))) {
+      reset();
+      onClose();
+    }
+  };
+
   return (
     <>
       <Button mr={4} onClick={onOpen}>
         <AddIcon mr={3} /> Dodaj przepis
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onModalClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Dodaj przepis</ModalHeader>
@@ -148,11 +158,11 @@ const AddRecipeModal = () => {
           </form>
 
           <ModalFooter>
-            <Button onClick={onClose} mr={3}>
-              Cancel
+            <Button onClick={onModalClose} mr={3}>
+              Cofnij
             </Button>
             <Button colorScheme="blue" type="submit" form="addRecipeForm">
-              Save
+              Zapisz
             </Button>
           </ModalFooter>
         </ModalContent>
