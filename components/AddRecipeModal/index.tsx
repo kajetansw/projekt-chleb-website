@@ -149,8 +149,12 @@ const AddRecipeModal = () => {
                   <SimpleGrid columns={3} spacingY={2}>
                     <Checkbox value="Chleb jasny">Chleb jasny</Checkbox>
                     <Checkbox value="Chleb ciemny">Chleb ciemny</Checkbox>
-                    <Checkbox value="Deser">Deser</Checkbox>
+                    <Checkbox value="Chleb na zakwasie">Chleb na zakwasie</Checkbox>
+                    <Checkbox value="Chleb na drożdżach">Chleb na drożdżach</Checkbox>
+                    <Checkbox value="Inny chleb">Inne chleby</Checkbox>
+                    <Checkbox value="Bułki">Bułki</Checkbox>
                     <Checkbox value="Przekąska">Przekąska</Checkbox>
+                    <Checkbox value="Deser">Deser</Checkbox>
                   </SimpleGrid>
                 </CheckboxGroup>
               </FormControl>
