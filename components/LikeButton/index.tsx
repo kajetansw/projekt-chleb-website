@@ -22,7 +22,7 @@ const LikeButton = ({ recipe }: LikeButtonProps) => {
         setLikes((ls) => ls.filter((like) => like.userId !== auth.user?.uid));
       } else {
         addLike(recipe, auth.user.uid);
-        setLikes((ls) => [...ls, { userId: auth.user.uid }]);
+        setLikes((ls) => [...ls, { userId: auth.user!.uid }]);
       }
     }
   };
