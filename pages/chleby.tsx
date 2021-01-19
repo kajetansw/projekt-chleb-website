@@ -17,6 +17,14 @@ const BreadsPage = () => {
     ['/api/recipes/tag?tag=cc', auth.user?.token],
     firebasePostFetcher({ tag: 'Chleb ciemny' })
   );
+  const { data: sourdoughBreads } = useSWR(
+    ['/api/recipes/tag?tag=cnz', auth.user?.token],
+    firebasePostFetcher({ tag: 'Chleb na zakwasie' })
+  );
+  const { data: yeastBreads } = useSWR(
+    ['/api/recipes/tag?tag=cnd', auth.user?.token],
+    firebasePostFetcher({ tag: 'Chleb na drożdżach' })
+  );
 
   return (
     <PageShell title="Chleby">
@@ -29,6 +37,20 @@ const BreadsPage = () => {
         Chleby ciemne
       </Heading>
       {darkBreads ? <RecipesGrid recipes={darkBreads}></RecipesGrid> : <RecipeGridSkeleton />}
+
+      <Heading fontSize={30} fontWeight="200" mt={24} mb={3}>
+        Chleby na zakwasie
+      </Heading>
+      {sourdoughBreads ? (
+        <RecipesGrid recipes={sourdoughBreads}></RecipesGrid>
+      ) : (
+        <RecipeGridSkeleton />
+      )}
+
+      <Heading fontSize={30} fontWeight="200" mt={24} mb={3}>
+        Chleby na drożdżach
+      </Heading>
+      {yeastBreads ? <RecipesGrid recipes={yeastBreads}></RecipesGrid> : <RecipeGridSkeleton />}
     </PageShell>
   );
 };

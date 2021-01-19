@@ -25,7 +25,7 @@ interface GalleryProps {
 }
 
 const useCroppedRecipeInstruction = (recipeInstruction: string) => {
-  const charLimit = useBreakpointValue({ base: 400, lg: 600, xl: 1000 }) || 400;
+  const charLimit = useBreakpointValue({ base: 300, lg: 400, xl: 600 }) || 400;
   return recipeInstruction.slice(0, charLimit) + '...';
 };
 

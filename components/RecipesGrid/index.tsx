@@ -23,7 +23,7 @@ const limitItems = <T,>(items: T[], maxItems?: number): T[] => {
 
 const RecipesGrid = ({ recipes, maxItems }: RecipesGridProps) => {
   if (!recipes?.length) {
-    return <Heading>Brak przepisów!</Heading>;
+    return <Heading fontSize={24}>Brak przepisów!</Heading>;
   }
 
   const viewedRecipes = limitItems(recipes, maxItems);
