@@ -51,7 +51,7 @@ const AddRecipeModal = () => {
   const onSubmit = () => {
     const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
     createRecipe(recipeToSave, imgFiles).then(() => {
-      onModalClose();
+      onClose();
       toast({
         position: 'top',
         title: 'Przepis zapisany.',
@@ -63,7 +63,7 @@ const AddRecipeModal = () => {
     });
   };
 
-  const onModalClose = () => {
+  const onPendingFormClose = () => {
     const isFormTouched =
       Object.keys(formState.touched).some((k) => !!formState.touched[k]) || ingredients.length > 0;
 
@@ -83,7 +83,7 @@ const AddRecipeModal = () => {
         <AddIcon mr={3} /> Dodaj przepis
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onModalClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onPendingFormClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Dodaj przepis</ModalHeader>
@@ -111,7 +111,13 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>Instrukcja</FormLabel>
-                <Textarea ref={register} name="instruction" rows={10} placeholder="Instrukcja" />
+                <Textarea
+                  ref={register}
+                  name="instruction"
+                  rows={10}
+                  placeholder="Instrukcja"
+                  onKeyDown={(e) => e.stopPropagation()}
+                />
               </FormControl>
 
               <FormControl mt={4}>
@@ -170,7 +176,7 @@ const AddRecipeModal = () => {
           </form>
 
           <ModalFooter>
-            <Button onClick={onModalClose} mr={3}>
+            <Button onClick={onPendingFormClose} mr={3}>
               Cofnij
             </Button>
             <Button colorScheme="blue" type="submit" form="addRecipeForm">
