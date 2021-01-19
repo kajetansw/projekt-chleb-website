@@ -58,11 +58,11 @@ const Navbar = () => {
         ml={[0, 0, 0, 20]}
       >
         <Box>
-          <NavbarLink href="/">PIERWSZE KROKI</NavbarLink>
+          <NavbarLink href="/pierwsze-kroki">PIERWSZE KROKI</NavbarLink>
           <NavbarLink href="/chleby">CHLEBY</NavbarLink>
-          <NavbarLink href="/">DESERY</NavbarLink>
-          <NavbarLink href="/">INNE WYPIEKI</NavbarLink>
-          <NavbarLink href="/">O MNIE</NavbarLink>
+          <NavbarLink href="/desery">DESERY</NavbarLink>
+          <NavbarLink href="/inne-wypieki">INNE WYPIEKI</NavbarLink>
+          <NavbarLink href="/o-mnie">O MNIE</NavbarLink>
         </Box>
 
         <Box mt={[8, 8, 8, 0]}>
