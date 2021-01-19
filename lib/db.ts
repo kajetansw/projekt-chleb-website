@@ -1,4 +1,4 @@
-import { RecipeFormInput, RecipeDb, User } from '@/models';
+import { RecipeFormInput, User, Recipe } from '@/models';
 import firebase from './firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -10,14 +10,26 @@ export function createUser(user: Omit<User, 'admin' | 'token'>) {
 }
 
 export function createRecipe(recipe: RecipeFormInput, imgFiles: File[]) {
-  const recipeToAdd: RecipeDb = {
+  const recipeToAdd: Recipe = {
     ...recipe,
     inputDate: new Date().toISOString(),
-    likes: 0,
+    likes: [],
     imageSrc: imgFiles?.[0]?.name || '',
+    uid: '',
   };
+  const doc = firestore.collection('recipes').doc();
 
-  return Promise.all([saveFiles(imgFiles), firestore.collection('recipes').add(recipeToAdd)]);
+  return Promise.all([saveFiles(imgFiles), doc.set({ ...recipeToAdd, uid: doc.id })]);
+}
+
+export function addLike(recipe: Recipe, userId: string) {
+  const updatedRecipeLikes: Recipe['likes'] = [...recipe.likes, { userId }];
+  return firestore.collection('recipes').doc(recipe.uid).update({ likes: updatedRecipeLikes });
+}
+
+export function removeLike(recipe: Recipe, userId: string) {
+  const updatedRecipeLikes: Recipe['likes'] = recipe.likes.filter((l) => l.userId !== userId);
+  return firestore.collection('recipes').doc(recipe.uid).update({ likes: updatedRecipeLikes });
 }
 
 function saveFiles(files: File[]) {

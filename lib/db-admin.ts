@@ -42,6 +42,16 @@ export async function getAllRecipes() {
   }
 }
 
+export async function getLikesForRecipe(uid: string) {
+  try {
+    const recipe = await getRecipeWithId(uid);
+    return recipe?.likes || [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 export async function getAllRecipesWithTag(tag: string) {
   const snapshot = await firestore.collection('recipes').where('tags', 'array-contains', tag).get();
 
@@ -69,7 +79,7 @@ async function firebaseDocsToRecipe(
   const recipes: Recipe[] = [];
 
   for (const doc of snapshot.docs) {
-    const recipe = { uid: doc.id, ...doc.data() } as Recipe;
+    const recipe = doc.data() as Recipe;
     recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
     recipes.push(recipe);
   }

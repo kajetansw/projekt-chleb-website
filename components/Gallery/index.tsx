@@ -73,7 +73,7 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             iconSize={6}
             fontSize={14}
           >
-            {recipes[viewedRecipeIdx].likes}
+            {recipes[viewedRecipeIdx].likes.length}
           </IconBadge>
 
           <StyledLink href={'p/' + recipes[viewedRecipeIdx].uid}>

@@ -4,13 +4,11 @@ export interface Recipe {
   ingredients: string[];
   instruction: string;
   timeOfPreparationInMins: number;
-  likes: number;
+  likes: { userId: string }[];
   imageSrc: string;
   tags: string[];
   inputDate: string;
 }
-
-export type RecipeDb = Omit<Recipe, 'uid'>;
 
 export type RecipeFormInput = Omit<Recipe, 'uid' | 'likes' | 'inputDate' | 'imageSrc'>;
 
