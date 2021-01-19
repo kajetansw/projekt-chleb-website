@@ -15,7 +15,7 @@ const DessertsPage = () => {
   );
 
   return (
-    <PageShell title="Chleby">
+    <PageShell title="Projekt Chleb - Desery">
       <Heading fontSize={30} fontWeight="200" mb={3}>
         Desery
       </Heading>

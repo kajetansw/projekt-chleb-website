@@ -27,7 +27,7 @@ const BreadsPage = () => {
   );
 
   return (
-    <PageShell title="Chleby">
+    <PageShell title="Projekt Chleb - Chleby">
       <Heading fontSize={30} fontWeight="200" mb={3}>
         Chleby jasne
       </Heading>
