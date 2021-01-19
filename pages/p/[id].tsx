@@ -2,10 +2,7 @@ import { GetStaticPathsResult, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
 import { Box, Flex, Heading, UnorderedList, ListItem, Text } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 
-import { Recipe } from '@/models';
 import { getAllRecipes, getRecipeWithId } from '@/lib/db-admin';
 import PageShell from '@/components/PageShell';
 import ResponsiveImage from '@/components/ResponsiveImage';
@@ -13,9 +10,8 @@ import TitleHeading from '@/components/TitleHeading';
 import IconBadge from '@/components/IconBadge';
 import formatMinutes from '@/utils/formatMinutes';
 import TagIcon from '@/components/TagIcon';
-import LikeIcon from '@/components/LikeIcon';
-import { addLike, removeLike } from '@/lib/db';
-import { useAuth } from '@/lib/auth';
+import LikeButton from '@/components/LikeButton';
+import { Recipe } from '@/models';
 
 interface RecipeProps {
   recipe: Recipe | undefined;
@@ -73,7 +69,7 @@ const RecipeView = ({ recipe }: RecipeProps) => {
         >
           {recipe.tags.join(', ')}
         </IconBadge>
-        <LikeBadgeButton recipe={recipe} />
+        <LikeButton recipe={recipe} />
       </Flex>
 
       <Flex direction={['column', 'column', 'row']} mt={12}>
@@ -98,48 +94,6 @@ const RecipeView = ({ recipe }: RecipeProps) => {
         </Box>
       </Flex>
     </PageShell>
-  );
-};
-
-interface LikeBadgeButtonProps {
-  recipe: Recipe;
-}
-
-const LikeBadgeButton = ({ recipe }: LikeBadgeButtonProps) => {
-  const auth = useAuth();
-  const { data } = useSWR('/api/recipes/likes?uid=' + recipe.uid);
-  const [likes, setLikes] = useState<Recipe['likes']>([]);
-  const onClick = () => {
-    if (likes && auth.user) {
-      if (likes.some((like) => like.userId === auth.user?.uid)) {
-        removeLike(recipe, auth.user.uid);
-        setLikes((ls) => ls.filter((like) => like.userId !== auth.user?.uid));
-      } else {
-        addLike(recipe, auth.user.uid);
-        setLikes((ls) => [...ls, { userId: auth.user.uid }]);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      setLikes(data as Recipe['likes']);
-    }
-  }, [data]);
-
-  return (
-    <IconBadge
-      IconComponent={LikeIcon}
-      color="#000000"
-      fontSize={18}
-      iconColor={likes && likes.some((l) => l.userId === auth.user?.uid) ? '#F2C94C' : '#CDCDCD'}
-      iconSize={7}
-      mr={6}
-      cursor={auth.user ? 'pointer' : 'initial'}
-      onClick={auth.user ? onClick : undefined}
-    >
-      {likes.length}
-    </IconBadge>
   );
 };
 
