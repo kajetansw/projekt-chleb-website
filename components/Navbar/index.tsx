@@ -59,7 +59,7 @@ const Navbar = () => {
       >
         <Box>
           <NavbarLink href="/">PIERWSZE KROKI</NavbarLink>
-          <NavbarLink href="/">CHLEBY</NavbarLink>
+          <NavbarLink href="/chleby">CHLEBY</NavbarLink>
           <NavbarLink href="/">DESERY</NavbarLink>
           <NavbarLink href="/">INNE WYPIEKI</NavbarLink>
           <NavbarLink href="/">O MNIE</NavbarLink>

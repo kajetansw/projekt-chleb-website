@@ -2,19 +2,14 @@ import { Recipe } from '@/models';
 import { firestore, storage } from '@/lib/firebase-admin';
 
 export async function getPopularRecipes(amount: number) {
-  const snapshot = await firestore.collection('recipes').orderBy('likes', 'desc').get();
-
-  const recipes: Recipe[] = [];
+  const snapshot = await firestore
+    .collection('recipes')
+    .orderBy('likes', 'desc')
+    .limit(amount)
+    .get();
 
   try {
-    for (let i = 0; i < Math.min(snapshot.docs.length, amount); i++) {
-      const doc = snapshot.docs[i];
-      const recipe = { uid: doc.id, ...doc.data() } as Recipe;
-      recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
-      recipes.push(recipe);
-    }
-
-    return recipes;
+    return await firebaseDocsToRecipe(snapshot);
   } catch (err) {
     console.error(err);
     return [];
@@ -22,19 +17,14 @@ export async function getPopularRecipes(amount: number) {
 }
 
 export async function getNewestRecipes(amount: number) {
-  const snapshot = await firestore.collection('recipes').orderBy('inputDate', 'desc').get();
-
-  const recipes: Recipe[] = [];
+  const snapshot = await firestore
+    .collection('recipes')
+    .orderBy('inputDate', 'desc')
+    .limit(amount)
+    .get();
 
   try {
-    for (let i = 0; i < Math.min(snapshot.docs.length, amount); i++) {
-      const doc = snapshot.docs[i];
-      const recipe = { uid: doc.id, ...doc.data() } as Recipe;
-      recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
-      recipes.push(recipe);
-    }
-
-    return recipes;
+    return await firebaseDocsToRecipe(snapshot);
   } catch (err) {
     console.error(err);
     return [];
@@ -43,15 +33,24 @@ export async function getNewestRecipes(amount: number) {
 
 export async function getAllRecipes() {
   const snapshot = await firestore.collection('recipes').get();
-  const recipes: Recipe[] = [];
 
-  for (const doc of snapshot.docs) {
-    const recipe = { uid: doc.id, ...doc.data() } as Recipe;
-    recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
-    recipes.push({ uid: doc.id, ...doc.data() } as Recipe);
+  try {
+    return await firebaseDocsToRecipe(snapshot);
+  } catch (err) {
+    console.error(err);
+    return [];
   }
+}
 
-  return recipes;
+export async function getAllRecipesWithTag(tag: string) {
+  const snapshot = await firestore.collection('recipes').where('tags', 'array-contains', tag).get();
+
+  try {
+    return await firebaseDocsToRecipe(snapshot);
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 }
 
 export async function getRecipeWithId(id: string): Promise<Recipe | undefined> {
@@ -62,6 +61,20 @@ export async function getRecipeWithId(id: string): Promise<Recipe | undefined> {
   }
 
   return recipe;
+}
+
+async function firebaseDocsToRecipe(
+  snapshot: FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>
+) {
+  const recipes: Recipe[] = [];
+
+  for (const doc of snapshot.docs) {
+    const recipe = { uid: doc.id, ...doc.data() } as Recipe;
+    recipe.imageSrc = await getImageDownloadUrl(recipe.imageSrc);
+    recipes.push(recipe);
+  }
+
+  return recipes;
 }
 
 async function getImageDownloadUrl(imageName: string) {

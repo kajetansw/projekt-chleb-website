@@ -14,7 +14,7 @@ interface RecipesGridProps {
   maxItems?: number;
 }
 
-const limitItems = <T,>(items: T[], maxItems: number | undefined): T[] => {
+const limitItems = <T,>(items: T[], maxItems?: number): T[] => {
   if (maxItems && maxItems >= 0 && maxItems <= items.length - 1) {
     return items.slice(0, maxItems);
   }
