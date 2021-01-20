@@ -2,6 +2,7 @@
 
 Website for the "Projekt Chleb" initiative, developed with a tech stack:
 
+- [React](https://reactjs.org)
 - [NextJS](https://nextjs.org)
 - [Typescript](https://www.typescriptlang.org/)
 - Linting with [ESLint](https://eslint.org/)
