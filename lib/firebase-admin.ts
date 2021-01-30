@@ -8,7 +8,6 @@ if (!admin.apps.length) {
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     }),
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_WITHOUT_PREFIX,
   });
 }
 

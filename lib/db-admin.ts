@@ -1,5 +1,5 @@
 import { Recipe } from '@/models';
-import { firestore, storage } from '@/lib/firebase-admin';
+import { firestore } from '@/lib/firebase-admin';
 
 export async function getPopularRecipes(amount: number) {
   const snapshot = await firestore
