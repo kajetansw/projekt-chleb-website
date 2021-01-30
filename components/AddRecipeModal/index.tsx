@@ -50,7 +50,7 @@ const AddRecipeModal = () => {
 
   const onSubmit = () => {
     const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
-    createRecipe(recipeToSave, imgFiles).then(() => {
+    createRecipe(recipeToSave, imgFiles[0]).then(() => {
       onClose();
       toast({
         position: 'top',
@@ -139,7 +139,7 @@ const AddRecipeModal = () => {
 
               <FormControl mt={4}>
                 <FormLabel>URL zdjęcia</FormLabel>
-                <Dropzone onDrop={setImgFiles}>
+                <Dropzone onDrop={setImgFiles} maxFiles={1}>
                   {({ getRootProps, getInputProps, acceptedFiles }) => (
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
