@@ -6,6 +6,7 @@ Website for the "Projekt Chleb" initiative, developed with a tech stack:
 - [NextJS](https://nextjs.org)
 - [Typescript](https://www.typescriptlang.org/)
 - [Firebase](https://firebase.google.com)
+- [Cloudinary](https://cloudinary.com)
 - Linting with [ESLint](https://eslint.org/)
 - Formatting with [Prettier](https://prettier.io/)
 - Linting, typechecking and formatting on by default using [`husky`](https://github.com/typicode/husky) for commit hooks
