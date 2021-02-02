@@ -10,11 +10,11 @@ import RecipeGridSkeleton from '@/components/RecipeGridSkeleton';
 const OtherBakingsPage = () => {
   const auth = useAuth();
   const { data: rolls } = useSWR(
-    ['/api/recipes/tag?tag=d', auth.user?.token],
+    ['/api/recipes/tag?tag=r', auth.user?.token],
     firebasePostFetcher({ tag: 'Bułka' })
   );
   const { data: snacks } = useSWR(
-    ['/api/recipes/tag?tag=d', auth.user?.token],
+    ['/api/recipes/tag?tag=s', auth.user?.token],
     firebasePostFetcher({ tag: 'Przekąska' })
   );
 
