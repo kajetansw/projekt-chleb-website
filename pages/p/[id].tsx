@@ -77,11 +77,16 @@ const RecipeView = ({ recipe }: RecipeProps) => {
           <Heading fontSize={24} mb={5}>
             Składniki
           </Heading>
-          <UnorderedList fontSize={18}>
-            {recipe.ingredients.map((ingredient) => (
-              <ListItem key={ingredient}>{ingredient}</ListItem>
-            ))}
-          </UnorderedList>
+          {recipe.ingredientSections.map((section) => (
+            <Box key={section.title} mb={4}>
+              <Heading fontSize={18}>{section.title}</Heading>
+              <UnorderedList fontSize={18} mb={6}>
+                {section.ingredients.map((i) => (
+                  <ListItem key={i}>{i}</ListItem>
+                ))}
+              </UnorderedList>
+            </Box>
+          ))}
         </Box>
 
         <Box flexBasis="67%">

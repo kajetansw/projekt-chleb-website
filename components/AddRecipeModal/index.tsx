@@ -29,9 +29,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Dropzone from 'react-dropzone';
 
-import { Recipe, RecipeFormInput } from '@/models';
+import { IngredientSection, Recipe, RecipeFormInput } from '@/models';
 import { createRecipe } from '@/lib/db';
-import MultiInput from '@/components/MultiInput';
+import IngredientSectionsInput from '@/components/IngredientSectionsInput';
 
 type FormFieldValues = Omit<Recipe, 'uid' | 'likes' | 'inputDate' | 'imageSrc'>;
 
@@ -45,11 +45,11 @@ const AddRecipeModal = () => {
   const { register, handleSubmit, getValues, formState, reset } = useForm<FormFieldValues>();
 
   const [tags, setTags] = useState<string[]>([]);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredientSections, setIngredientSections] = useState<IngredientSection[]>([]);
   const [imgFiles, setImgFiles] = useState<File[]>([]);
 
   const onSubmit = () => {
-    const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
+    const recipeToSave: RecipeFormInput = { ...getValues(), ingredientSections, tags };
     createRecipe(recipeToSave, imgFiles[0]).then(() => {
       onClose();
       toast({
@@ -65,7 +65,8 @@ const AddRecipeModal = () => {
 
   const onPendingFormClose = () => {
     const isFormTouched =
-      Object.keys(formState.touched).some((k) => !!formState.touched[k]) || ingredients.length > 0;
+      Object.keys(formState.touched).some((k) => !!formState.touched[k]) ||
+      ingredientSections.length > 0;
 
     if (!isFormTouched || (isFormTouched && confirm('Czy na pewno chcesz porzucić zmiany?'))) {
       reset();
@@ -101,11 +102,9 @@ const AddRecipeModal = () => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Składniki</FormLabel>
-                <MultiInput
-                  onItemsChange={setIngredients}
-                  name="ingredients"
-                  placeholder="Składniki"
+                <IngredientSectionsInput
+                  ingredientsSections={ingredientSections}
+                  onIngredientSectionsChange={setIngredientSections}
                 />
               </FormControl>
 

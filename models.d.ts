@@ -1,7 +1,13 @@
+export interface IngredientSection {
+  id: string;
+  title: string;
+  ingredients: string[];
+}
+
 export interface Recipe {
   uid: string;
   title: string;
-  ingredients: string[];
+  ingredientSections: IngredientSection[];
   instruction: string;
   timeOfPreparationInMins: number;
   likes: { userId: string }[];
