@@ -82,11 +82,16 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             </TitleHeading>
           </StyledLink>
 
-          <UnorderedList fontSize={18} mb={6}>
-            {recipes[viewedRecipeIdx].ingredients.map((ingredient) => (
-              <ListItem key={ingredient}>{ingredient}</ListItem>
-            ))}
-          </UnorderedList>
+          {recipes[viewedRecipeIdx].ingredientSections.map((section) => (
+            <Box key={section.title} mb={4}>
+              <Heading fontSize={18}>{section.title}</Heading>
+              <UnorderedList fontSize={18} mb={6}>
+                {section.ingredients.map((i) => (
+                  <ListItem key={i}>{i}</ListItem>
+                ))}
+              </UnorderedList>
+            </Box>
+          ))}
 
           <Text color="#828282" whiteSpace="pre-wrap" textAlign="justify">
             {croppedRecipeInstruction}

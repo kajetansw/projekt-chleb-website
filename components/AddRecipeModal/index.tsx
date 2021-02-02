@@ -23,13 +23,16 @@ import {
   Text,
   useDisclosure,
   useToast,
+  HStack,
+  Flex,
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Dropzone from 'react-dropzone';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Recipe, RecipeFormInput } from '@/models';
+import { IngredientSection, Recipe, RecipeFormInput } from '@/models';
 import { createRecipe } from '@/lib/db';
 import MultiInput from '@/components/MultiInput';
 
@@ -45,11 +48,43 @@ const AddRecipeModal = () => {
   const { register, handleSubmit, getValues, formState, reset } = useForm<FormFieldValues>();
 
   const [tags, setTags] = useState<string[]>([]);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientSection[]>([]);
   const [imgFiles, setImgFiles] = useState<File[]>([]);
+  const handleIngredientsChange = (idx: number) => (ingredientList: string[]) => {
+    setIngredients((currentIngredients) => {
+      const newIngredients = [...currentIngredients];
+      newIngredients[idx] = {
+        id: newIngredients[idx].id,
+        title: newIngredients[idx].title,
+        ingredients: ingredientList,
+      };
+      return newIngredients;
+    });
+  };
+  const handleIngredientsSectionTitleChange = (idx: number) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value: title } = event.target;
+
+    setIngredients((currentIngredients) => {
+      const newIngredients = [...currentIngredients];
+      newIngredients[idx] = {
+        id: newIngredients[idx].id,
+        title,
+        ingredients: newIngredients[idx].ingredients,
+      };
+      return newIngredients;
+    });
+  };
+  const handleAddIngredientsSection = () => {
+    setIngredients((curr) => [...curr, { title: '', ingredients: [], id: uuidv4() }]);
+  };
+  const handleIngredientsSectionRemoval = (title: string) => () => {
+    setIngredients((is) => is.filter((i) => i.title !== title));
+  };
 
   const onSubmit = () => {
-    const recipeToSave: RecipeFormInput = { ...getValues(), ingredients, tags };
+    const recipeToSave: RecipeFormInput = { ...getValues(), ingredientSections: ingredients, tags };
     createRecipe(recipeToSave, imgFiles[0]).then(() => {
       onClose();
       toast({
@@ -101,12 +136,30 @@ const AddRecipeModal = () => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Składniki</FormLabel>
-                <MultiInput
-                  onItemsChange={setIngredients}
-                  name="ingredients"
-                  placeholder="Składniki"
-                />
+                <Flex justifyContent="space-between" align="center">
+                  <FormLabel>Składniki</FormLabel>
+                  <Button onClick={handleAddIngredientsSection}>
+                    <AddIcon mr={3} /> Dodaj sekcję
+                  </Button>
+                </Flex>
+                {ingredients.map((i, idx) => (
+                  <Box key={i.id} border="1px solid #cfcfcf" px={4} py={3} mt={3} mb={6}>
+                    <HStack my={3}>
+                      <Input
+                        onChange={handleIngredientsSectionTitleChange(idx)}
+                        placeholder="Tytuł sekcji"
+                      />
+                      <Button onClick={handleIngredientsSectionRemoval(i.title)}>
+                        <DeleteIcon />
+                      </Button>
+                    </HStack>
+                    <MultiInput
+                      onItemsChange={handleIngredientsChange(idx)}
+                      name="ingredients"
+                      placeholder="Składniki"
+                    />
+                  </Box>
+                ))}
               </FormControl>
 
               <FormControl mt={4}>
