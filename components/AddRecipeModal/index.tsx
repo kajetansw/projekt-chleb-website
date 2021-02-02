@@ -23,18 +23,15 @@ import {
   Text,
   useDisclosure,
   useToast,
-  HStack,
-  Flex,
 } from '@chakra-ui/react';
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Dropzone from 'react-dropzone';
-import { v4 as uuidv4 } from 'uuid';
 
 import { IngredientSection, Recipe, RecipeFormInput } from '@/models';
 import { createRecipe } from '@/lib/db';
-import MultiInput from '@/components/MultiInput';
+import IngredientSectionsInput from '@/components/IngredientSectionsInput';
 
 type FormFieldValues = Omit<Recipe, 'uid' | 'likes' | 'inputDate' | 'imageSrc'>;
 
@@ -48,43 +45,11 @@ const AddRecipeModal = () => {
   const { register, handleSubmit, getValues, formState, reset } = useForm<FormFieldValues>();
 
   const [tags, setTags] = useState<string[]>([]);
-  const [ingredients, setIngredients] = useState<IngredientSection[]>([]);
+  const [ingredientSections, setIngredientSections] = useState<IngredientSection[]>([]);
   const [imgFiles, setImgFiles] = useState<File[]>([]);
-  const handleIngredientsChange = (idx: number) => (ingredientList: string[]) => {
-    setIngredients((currentIngredients) => {
-      const newIngredients = [...currentIngredients];
-      newIngredients[idx] = {
-        id: newIngredients[idx].id,
-        title: newIngredients[idx].title,
-        ingredients: ingredientList,
-      };
-      return newIngredients;
-    });
-  };
-  const handleIngredientsSectionTitleChange = (idx: number) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value: title } = event.target;
-
-    setIngredients((currentIngredients) => {
-      const newIngredients = [...currentIngredients];
-      newIngredients[idx] = {
-        id: newIngredients[idx].id,
-        title,
-        ingredients: newIngredients[idx].ingredients,
-      };
-      return newIngredients;
-    });
-  };
-  const handleAddIngredientsSection = () => {
-    setIngredients((curr) => [...curr, { title: '', ingredients: [], id: uuidv4() }]);
-  };
-  const handleIngredientsSectionRemoval = (title: string) => () => {
-    setIngredients((is) => is.filter((i) => i.title !== title));
-  };
 
   const onSubmit = () => {
-    const recipeToSave: RecipeFormInput = { ...getValues(), ingredientSections: ingredients, tags };
+    const recipeToSave: RecipeFormInput = { ...getValues(), ingredientSections, tags };
     createRecipe(recipeToSave, imgFiles[0]).then(() => {
       onClose();
       toast({
@@ -100,7 +65,8 @@ const AddRecipeModal = () => {
 
   const onPendingFormClose = () => {
     const isFormTouched =
-      Object.keys(formState.touched).some((k) => !!formState.touched[k]) || ingredients.length > 0;
+      Object.keys(formState.touched).some((k) => !!formState.touched[k]) ||
+      ingredientSections.length > 0;
 
     if (!isFormTouched || (isFormTouched && confirm('Czy na pewno chcesz porzucić zmiany?'))) {
       reset();
@@ -136,30 +102,10 @@ const AddRecipeModal = () => {
               </FormControl>
 
               <FormControl mt={4}>
-                <Flex justifyContent="space-between" align="center">
-                  <FormLabel>Składniki</FormLabel>
-                  <Button onClick={handleAddIngredientsSection}>
-                    <AddIcon mr={3} /> Dodaj sekcję
-                  </Button>
-                </Flex>
-                {ingredients.map((i, idx) => (
-                  <Box key={i.id} border="1px solid #cfcfcf" px={4} py={3} mt={3} mb={6}>
-                    <HStack my={3}>
-                      <Input
-                        onChange={handleIngredientsSectionTitleChange(idx)}
-                        placeholder="Tytuł sekcji"
-                      />
-                      <Button onClick={handleIngredientsSectionRemoval(i.title)}>
-                        <DeleteIcon />
-                      </Button>
-                    </HStack>
-                    <MultiInput
-                      onItemsChange={handleIngredientsChange(idx)}
-                      name="ingredients"
-                      placeholder="Składniki"
-                    />
-                  </Box>
-                ))}
+                <IngredientSectionsInput
+                  ingredientsSections={ingredientSections}
+                  onIngredientSectionsChange={setIngredientSections}
+                />
               </FormControl>
 
               <FormControl mt={4}>
