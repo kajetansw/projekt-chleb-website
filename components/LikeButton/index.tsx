@@ -9,9 +9,10 @@ import LikeIcon from '../LikeIcon';
 
 interface LikeButtonProps {
   recipe: Recipe;
+  onLikesChange: (likes: Recipe['likes']) => void;
 }
 
-const LikeButton = ({ recipe }: LikeButtonProps) => {
+const LikeButton = ({ recipe, onLikesChange }: LikeButtonProps) => {
   const auth = useAuth();
   const { data } = useSWR('/api/recipes/likes?uid=' + recipe.uid);
   const [likes, setLikes] = useState<Recipe['likes']>([]);
@@ -19,10 +20,18 @@ const LikeButton = ({ recipe }: LikeButtonProps) => {
     if (likes && auth.user) {
       if (likes.some((like) => like.userId === auth.user?.uid)) {
         removeLike(recipe, auth.user.uid);
-        setLikes((ls) => ls.filter((like) => like.userId !== auth.user?.uid));
+        setLikes((ls) => {
+          const newLikes = ls.filter((like) => like.userId !== auth.user?.uid);
+          onLikesChange(newLikes);
+          return newLikes;
+        });
       } else {
         addLike(recipe, auth.user.uid);
-        setLikes((ls) => [...ls, { userId: auth.user!.uid }]);
+        setLikes((ls) => {
+          const newLikes = [...ls, { userId: auth.user!.uid }];
+          onLikesChange(newLikes);
+          return newLikes;
+        });
       }
     }
   };
