@@ -84,8 +84,8 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
 
           {recipes[viewedRecipeIdx].ingredientSections.map((section) => (
             <Box key={section.title} mb={4}>
-              <Heading fontSize={18}>{section.title}</Heading>
-              <UnorderedList fontSize={18} mb={6}>
+              <Heading fontSize={17}>{section.title}</Heading>
+              <UnorderedList fontSize={17} mb={6}>
                 {section.ingredients.map((i) => (
                   <ListItem key={i}>{i}</ListItem>
                 ))}
@@ -93,7 +93,7 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
             </Box>
           ))}
 
-          <Text color="#828282" whiteSpace="pre-wrap" textAlign="justify">
+          <Text fontSize={17} color="#828282" whiteSpace="pre-wrap" textAlign="justify">
             {croppedRecipeInstruction}
           </Text>
         </Box>
