@@ -68,7 +68,7 @@ const Gallery = ({ recipes }: GalleryProps): JSX.Element => {
           </IconBadge>
           <IconBadge
             IconComponent={LikeIcon}
-            iconColor="#f2c94c"
+            iconColor="#ECC94B"
             color="#707070"
             iconSize={6}
             fontSize={14}
