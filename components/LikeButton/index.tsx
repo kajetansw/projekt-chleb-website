@@ -38,7 +38,7 @@ const LikeButton = ({ recipe, onLikesChange }: LikeButtonProps) => {
   const likeButton =
     likes && likes.some((l) => l.userId === auth.user?.uid) ? (
       <Button variant="outline" colorScheme="yellow" onClick={auth.user ? onClick : undefined}>
-        <LikeIcon color="#B7791F" mr={2} /> Lubisz ten przepis!
+        <LikeIcon color="#B7791F" mr={2} /> Lubisz ten przepis.
       </Button>
     ) : (
       <Button colorScheme="yellow" onClick={auth.user ? onClick : undefined}>

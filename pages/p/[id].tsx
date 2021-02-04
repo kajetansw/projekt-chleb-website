@@ -93,7 +93,7 @@ const RecipeView = ({ recipe }: RecipeProps) => {
             {recipeState.tags.join(', ')}
           </IconBadge>
           <IconBadge
-            my={[4, 0]}
+            mb={[7, 0]}
             IconComponent={LikeIcon}
             color="#000000"
             fontSize={18}
