@@ -2,6 +2,7 @@ import { GetStaticPathsResult, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
 import { Box, Flex, Heading, UnorderedList, ListItem, Text } from '@chakra-ui/react';
 import { TimeIcon } from '@chakra-ui/icons';
+import { useEffect, useReducer } from 'react';
 
 import { getAllRecipes, getRecipeWithId } from '@/lib/db-admin';
 import PageShell from '@/components/PageShell';
@@ -12,13 +13,28 @@ import formatMinutes from '@/utils/formatMinutes';
 import TagIcon from '@/components/TagIcon';
 import LikeButton from '@/components/LikeButton';
 import { Recipe } from '@/models';
+import LikeIcon from '@/components/LikeIcon';
 
 interface RecipeProps {
-  recipe: Recipe | undefined;
+  recipe: Recipe;
 }
+
+type RecipeStateActions =
+  | { type: 'recipe/update'; payload: Recipe }
+  | { type: 'recipeLikes/update'; payload: Recipe['likes'] };
+
+const recipeReducer: React.Reducer<Recipe, RecipeStateActions> = (state, action) => {
+  switch (action.type) {
+    case 'recipe/update':
+      return { ...state, ...action.payload };
+    case 'recipeLikes/update':
+      return { ...state, likes: action.payload };
+  }
+};
 
 const RecipeView = ({ recipe }: RecipeProps) => {
   const router = useRouter();
+  const [recipeState, dispatch] = useReducer(recipeReducer, recipe);
 
   if (!recipe) {
     return (
@@ -35,41 +51,63 @@ const RecipeView = ({ recipe }: RecipeProps) => {
     );
   }
 
+  useEffect(() => {
+    if (recipe) {
+      dispatch({ type: 'recipe/update', payload: recipe });
+    }
+  }, [recipe]);
+
   return (
-    <PageShell title={recipe.title}>
+    <PageShell title={recipeState.title}>
       <ResponsiveImage
-        src={recipe.imageSrc}
+        src={recipeState.imageSrc}
         width={{ base: 600, sm: 1000, md: 3000 }}
         height={{ base: 525, sm: 400, md: 800 }}
         objectFit="cover"
       ></ResponsiveImage>
 
       <TitleHeading fontSize={42} mt={10} mb={4}>
-        {recipe.title}
+        {recipeState.title}
       </TitleHeading>
-      <Flex direction={['column', 'row']}>
-        <IconBadge
-          IconComponent={TimeIcon}
-          color="#000000"
-          fontSize={18}
-          iconColor="#27AE60"
-          iconSize={7}
-          mr={6}
-        >
-          {formatMinutes(recipe.timeOfPreparationInMins)}
-        </IconBadge>
-        <IconBadge
-          my={[4, 0]}
-          IconComponent={TagIcon}
-          color="#000000"
-          fontSize={18}
-          iconColor="#2D9CDB"
-          iconSize={7}
-          mr={6}
-        >
-          {recipe.tags.join(', ')}
-        </IconBadge>
-        <LikeButton recipe={recipe} />
+      <Flex direction={['column', 'row']} justify="space-between">
+        <Box>
+          <IconBadge
+            IconComponent={TimeIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#27AE60"
+            iconSize={7}
+            mr={6}
+          >
+            {formatMinutes(recipeState.timeOfPreparationInMins)}
+          </IconBadge>
+          <IconBadge
+            my={[4, 0]}
+            IconComponent={TagIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#2D9CDB"
+            iconSize={7}
+            mr={6}
+          >
+            {recipeState.tags.join(', ')}
+          </IconBadge>
+          <IconBadge
+            mb={[7, 0]}
+            IconComponent={LikeIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#ECC94B"
+            iconSize={7}
+            mr={6}
+          >
+            {recipeState.likes.length}
+          </IconBadge>
+        </Box>
+        <LikeButton
+          recipe={recipeState}
+          onLikesChange={(likes) => dispatch({ type: 'recipeLikes/update', payload: likes })}
+        />
       </Flex>
 
       <Flex direction={['column', 'column', 'row']} mt={12}>
@@ -77,7 +115,7 @@ const RecipeView = ({ recipe }: RecipeProps) => {
           <Heading fontSize={24} mb={5}>
             Składniki
           </Heading>
-          {recipe.ingredientSections.map((section) => (
+          {recipeState.ingredientSections.map((section) => (
             <Box key={section.title} mb={4}>
               <Heading fontSize={18}>{section.title}</Heading>
               <UnorderedList fontSize={18} mb={6}>
@@ -94,7 +132,7 @@ const RecipeView = ({ recipe }: RecipeProps) => {
             Przygotowanie
           </Heading>
           <Text whiteSpace="pre-wrap" textAlign="justify" fontSize={18}>
-            {recipe.instruction}
+            {recipeState.instruction}
           </Text>
         </Box>
       </Flex>
