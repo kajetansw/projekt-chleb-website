@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
+import { Button } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
 import { addLike, removeLike } from '@/lib/db';
 import { Recipe } from '@/models';
-import IconBadge from '../IconBadge';
 import LikeIcon from '../LikeIcon';
 
 interface LikeButtonProps {
@@ -26,6 +26,16 @@ const LikeButton = ({ recipe }: LikeButtonProps) => {
       }
     }
   };
+  const likeButton =
+    likes && likes.some((l) => l.userId === auth.user?.uid) ? (
+      <Button variant="outline" colorScheme="yellow" onClick={auth.user ? onClick : undefined}>
+        <LikeIcon color="#B7791F" mr={2} /> Lubisz ten przepis!
+      </Button>
+    ) : (
+      <Button colorScheme="yellow" onClick={auth.user ? onClick : undefined}>
+        <LikeIcon color="#000" mr={2} /> Polub ten przepis!
+      </Button>
+    );
 
   useEffect(() => {
     if (data) {
@@ -33,20 +43,7 @@ const LikeButton = ({ recipe }: LikeButtonProps) => {
     }
   }, [data]);
 
-  return (
-    <IconBadge
-      IconComponent={LikeIcon}
-      color="#000000"
-      fontSize={18}
-      iconColor={likes && likes.some((l) => l.userId === auth.user?.uid) ? '#F2C94C' : '#CDCDCD'}
-      iconSize={7}
-      mr={6}
-      cursor={auth.user ? 'pointer' : 'initial'}
-      onClick={auth.user ? onClick : undefined}
-    >
-      {likes.length}
-    </IconBadge>
-  );
+  return <>{auth?.user ? likeButton : null}</>;
 };
 
 export default LikeButton;

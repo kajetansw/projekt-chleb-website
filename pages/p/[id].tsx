@@ -12,6 +12,7 @@ import formatMinutes from '@/utils/formatMinutes';
 import TagIcon from '@/components/TagIcon';
 import LikeButton from '@/components/LikeButton';
 import { Recipe } from '@/models';
+import LikeIcon from '@/components/LikeIcon';
 
 interface RecipeProps {
   recipe: Recipe | undefined;
@@ -47,28 +48,41 @@ const RecipeView = ({ recipe }: RecipeProps) => {
       <TitleHeading fontSize={42} mt={10} mb={4}>
         {recipe.title}
       </TitleHeading>
-      <Flex direction={['column', 'row']}>
-        <IconBadge
-          IconComponent={TimeIcon}
-          color="#000000"
-          fontSize={18}
-          iconColor="#27AE60"
-          iconSize={7}
-          mr={6}
-        >
-          {formatMinutes(recipe.timeOfPreparationInMins)}
-        </IconBadge>
-        <IconBadge
-          my={[4, 0]}
-          IconComponent={TagIcon}
-          color="#000000"
-          fontSize={18}
-          iconColor="#2D9CDB"
-          iconSize={7}
-          mr={6}
-        >
-          {recipe.tags.join(', ')}
-        </IconBadge>
+      <Flex direction={['column', 'row']} justify="space-between">
+        <Box>
+          <IconBadge
+            IconComponent={TimeIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#27AE60"
+            iconSize={7}
+            mr={6}
+          >
+            {formatMinutes(recipe.timeOfPreparationInMins)}
+          </IconBadge>
+          <IconBadge
+            my={[4, 0]}
+            IconComponent={TagIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#2D9CDB"
+            iconSize={7}
+            mr={6}
+          >
+            {recipe.tags.join(', ')}
+          </IconBadge>
+          <IconBadge
+            my={[4, 0]}
+            IconComponent={LikeIcon}
+            color="#000000"
+            fontSize={18}
+            iconColor="#ECC94B"
+            iconSize={7}
+            mr={6}
+          >
+            {recipe.likes.length}
+          </IconBadge>
+        </Box>
         <LikeButton recipe={recipe} />
       </Flex>
 

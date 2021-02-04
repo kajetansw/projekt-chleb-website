@@ -1,8 +1,8 @@
 import { Icon } from '@chakra-ui/react';
-import { LayoutProps } from '@chakra-ui/styled-system';
+import { LayoutProps, SpaceProps } from '@chakra-ui/styled-system';
 
-const LikeIcon = ({ color, ...layoutProps }: LayoutProps & { color: string }) => (
-  <Icon {...layoutProps} viewBox="0 0 512 512">
+const LikeIcon = ({ color, ...styleProps }: LayoutProps & SpaceProps & { color: string }) => (
+  <Icon {...styleProps} viewBox="0 0 512 512">
     <path
       fill={color}
       d="M512,217.229c0-27.618-22.469-50.087-50.087-50.087H341.119l17.585-47.974c0.057-0.155,0.111-0.309,0.163-0.465
