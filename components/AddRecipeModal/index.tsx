@@ -137,7 +137,7 @@ const AddRecipeModal = () => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>URL zdjęcia</FormLabel>
+                <FormLabel>Zdjęcie główne</FormLabel>
                 <Dropzone onDrop={setImgFiles} maxFiles={1}>
                   {({ getRootProps, getInputProps, acceptedFiles }) => (
                     <div {...getRootProps()}>
